@@ -32,15 +32,16 @@ body, html {
   padding: 0;
 }
 
-nav ul li,
-main ul li {
-  margin-right: 10px; /* Optioneel: voeg ruimte toe tussen de li-elementen */
-}
-
-nav ul li:last-child,
-main ul li:last-child {
-  margin-right: 0; /* Verwijder de rechtermarge van het laatste li-element */
-}
 .kitchen{
     width: 80%;
 }
+#xp-bar {
+    width: 300px;
+    height: 20px;
+    background-color: #ccc;
+  }
+  #xp-progress {
+    height: 100%;
+    background-color: #4caf50;
+  }
+  
