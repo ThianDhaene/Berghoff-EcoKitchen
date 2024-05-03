@@ -10,7 +10,6 @@
 
     updateXpBar(100);
 })();
-=======
 
 (function (){
     //Maken van canvas
