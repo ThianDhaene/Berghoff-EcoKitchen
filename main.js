@@ -1,17 +1,4 @@
 "use strict";
-(function () {
-    function updateXpBar(xp) {
-        const maxXp = 1000;
-
-        let progress = (xp / maxXp) * 100;
-
-        document.getElementById('xp-progress').style.width = progress + '%';
-    }
-
-    updateXpBar(100);
-})();
-=======
-
 (function (){
     //Aanmaken van canvas
     const canvas = document.getElementById('gameCanvas');
@@ -52,12 +39,7 @@
 
         moveDown() {
             for (const item of collisionItems) {
-                if (
-                    this.x < item.x + item.width &&
-                    this.x + this.width > item.x &&
-                    this.y < item.y + item.height &&
-                    this.y + this.height > item.y
-                ) {
+                if (detectCollision(this, item)) { 
                     if (this.y < item.y) {
                         return; 
                     }
@@ -67,16 +49,11 @@
                 this.y += this.speed;
             }
         }
-        
 
         moveLeft() {
             for (const item of collisionItems) {
-                if (
-                    this.x < item.x + item.width &&
-                    this.x + this.width > item.x &&
-                    this.y < item.y + item.height &&
-                    this.y + this.height > item.y
-                ) {if (this.x + this.width > item.x + item.width) {
+                if (detectCollision(this, item)) { 
+                    if (this.x + this.width > item.x + item.width) {
                         return; 
                     }
                 }
@@ -86,15 +63,9 @@
             }
         }
         
-
         moveRight() {
             for (const item of collisionItems) {
-                if (
-                    this.x < item.x + item.width &&
-                    this.x + this.width > item.x &&
-                    this.y < item.y + item.height &&
-                    this.y + this.height > item.y
-                ) {
+                if (detectCollision(this, item)) { 
                     if (this.x < item.x) {
                         return;
                     }
@@ -154,34 +125,40 @@
     }
 
     const loadLevel1 = function(){
-        loadDefaults();
+        loadStatic();
         
-        //Aanmaken van tafels en stoelen
-        loadTable(750, 350 , 300, 150);
-        loadChair1(775, 510 , 50, 50);
-        loadChair1(875, 510 , 50, 50);
-        loadChair1(975, 510 , 50, 50);
-        loadChair2(775, 290 , 50, 50);
-        loadChair2(875, 290 , 50, 50);
-        loadChair2(975, 290 , 50, 50);
-
-        loadCicken(170, 90, 90, 90);
-        loadCicken(100, 30, 90, 90);
     }
     
-    const loadDefaults = function(){
+    const loadStatic = function(){
         loadKitchen(300, 0, canvas.width, canvas.height);
-
+        
         //Aanmaken tuin
         loadGarden(0, 0, 300, canvas.height);
         loadFence(0, 150, 300, 50);
-
+        
         //Aanmaken van muren
         createWall(300, 0, canvas.width, 10);
         createWall(300, canvas.height-10, canvas.width, 10);
         createWall(canvas.width-10, 0, 10, canvas.height);
         createWall(300, 0, 10, canvas.height/2.5);
         createWall(300, canvas.height - canvas.height/2.5, 10, canvas.height/2.5);
+
+        //Aanmaken van tafels en stoelen
+        switch(Level){
+            case 1:
+                loadTable(750, 350 , 300, 150);
+                loadChair1(775, 510 , 50, 50);
+                loadChair1(875, 510 , 50, 50);
+                loadChair1(975, 510 , 50, 50);
+                loadChair2(775, 290 , 50, 50);
+                loadChair2(875, 290 , 50, 50);
+                loadChair2(975, 290 , 50, 50);
+                loadOven(400, 10, 100, 100);
+                break;
+        }
+    
+        loadCicken(170, 90, 90, 90);
+        loadCicken(100, 30, 90, 90);
     }
 
     // Instellen van keukenvloer
@@ -229,6 +206,13 @@
         const fence = new Image();
         fence.src = 'img/fence.png';
         ctx.drawImage(fence, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+
+    const loadOven = function(x,y, width, height){
+        const oven = new Image();
+        oven.src = 'img/oven1.png';
+        ctx.drawImage(oven, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
 
