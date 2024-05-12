@@ -9,11 +9,9 @@
     }
 
     updateXpBar(100);
-})();
 
-(function (){
     //Maken van canvas
-    const canvas = document.getElementById('gameCanvas');
+    const canvas = document.getElementById('canvas'); // Selecteer het canvas element
     const ctx = canvas.getContext('2d');
 
     //Character properties
@@ -118,12 +116,4 @@
 
     // Initial call to moveCharacter to start the continuous movement
     moveCharacter();
-
-
-    // Add event listener for keyboard input
-    document.addEventListener('keydown', handleKeyPress);
-
-    // Initial update to draw the game
-    update();
 })();
-
