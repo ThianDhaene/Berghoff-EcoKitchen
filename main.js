@@ -1,5 +1,19 @@
 "use strict";
 (function (){
+    //navbar
+    document.querySelectorAll(`.faq`).forEach(faq => {
+        faq.addEventListener("click", () => {
+          const answer = faq.querySelector(`.faq-answer`);
+          answer.style.display = answer.style.display === `block` ? `none` : `block`;
+        });
+      });
+      const toggle = function () {
+        const isExpanded = this.getAttribute("aria-expanded") === "true";
+        this.setAttribute("aria-expanded", isExpanded ? "false" : "true");
+      };
+      const menubutton = document.querySelector("#menu");
+      menubutton.addEventListener("click", toggle);
+
     function updateXpBar(xp) {
         const maxXp = 1000;
 
@@ -341,4 +355,3 @@
     moveCharacter();
     update();
 })();
-
