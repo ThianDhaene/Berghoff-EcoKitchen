@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 "use strict";
 (function (){
     //navbar
@@ -16,7 +14,15 @@
       const menubutton = document.querySelector("#menu");
       menubutton.addEventListener("click", toggle);
 
+    function updateXpBar(xp) {
+        const maxXp = 1000;
 
+        let progress = (xp / maxXp) * 100;
+
+        document.getElementById('xp-progress').style.width = progress + '%';
+    }
+
+    updateXpBar(100);
     //Aanmaken van canvas
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
@@ -218,6 +224,12 @@
         ctx.drawImage(chair, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
+    const loadChair3 = function(x,y, width, height){
+        const chair = new Image();
+        chair.src = 'img/chair3.png';
+        ctx.drawImage(chair, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
 
     const loadFence = function(x,y, width, height){
         const fence = new Image();
@@ -228,8 +240,50 @@
 
     const loadOven = function(x,y, width, height){
         const oven = new Image();
+        oven.src = 'img/oven.png';
+        ctx.drawImage(oven, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadOven1 = function(x,y, width, height){
+        const oven = new Image();
         oven.src = 'img/oven1.png';
         ctx.drawImage(oven, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadTv = function(x,y, width, height){
+        const tv = new Image();
+        tv.src = 'img/TV.png';
+        ctx.drawImage(tv, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadToilet = function(x,y, width, height){
+        const toilet = new Image();
+        toilet.src = 'img/toilet.png';
+        ctx.drawImage(toilet, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadSofa = function(x,y, width, height){
+        const sofa = new Image();
+        sofa.src = 'img/sofa.png';
+        ctx.drawImage(sofa, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadCouch = function(x,y, width, height){
+        const couch = new Image();
+        couch.src = 'img/couch.png';
+        ctx.drawImage(couch, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadPlant = function(x,y, width, height){
+        const plant = new Image();
+        plant.src = 'img/plant.png';
+        ctx.drawImage(plant, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
+    const loadSink = function(x,y, width, height){
+        const sink = new Image();
+        sink.src = 'img/sink.png';
+        ctx.drawImage(sink, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
 
@@ -301,5 +355,3 @@
     moveCharacter();
     update();
 })();
-
->>>>>>> Stashed changes
