@@ -25,9 +25,7 @@
     updateXpBar(100);
 
     //Maken van canvas
-    const canvas = document.getElementById('canvas'); // Selecteer het canvas element
-    //Aanmaken van canvas
-    const canvas = document.getElementById('gameCanvas');
+    const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
     let Level = 1;
