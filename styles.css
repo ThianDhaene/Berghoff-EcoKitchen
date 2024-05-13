@@ -1,0 +1,55 @@
+body, html {
+    margin: 0;
+    padding: 0;
+  }
+  
+  header {
+    background-color: #f5f5f5;
+    padding: 10px;
+  }
+  
+  nav,main {
+    display: flex;
+    align-items: center;
+  }
+  
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-right: 10px;
+  }
+  
+  a {
+    margin-left: auto;
+  }
+  nav ul {
+  display: flex;
+  list-style: none;
+  padding: 0;
+}
+
+nav ul li,
+main ul li {
+  margin-right: 10px; /* Optioneel: voeg ruimte toe tussen de li-elementen */
+}
+
+nav ul li:last-child,
+main ul li:last-child {
+  margin-right: 0; /* Verwijder de rechtermarge van het laatste li-element */
+}
+#gamecanvas{
+    width: 80%;
+}
+#xp-bar {
+    width: 300px;
+    height: 20px;
+    background-color: #ccc;
+  }
+  #xp-progress {
+    height: 100%;
+    background-color: #4caf50;
+  }
