@@ -109,9 +109,9 @@
                 loadChair2(875, 290 , 50, 50);
                 loadChair2(975, 290 , 50, 50);
                 loadOven(500, 10, 120, 80);
-                loadCicken(170, 90, 90, 90);
+                loadChicken(170, 90, 90, 90);
                 loadPlant(1100, 10, 100, 80);
-                loadCicken(100, 30, 90, 90);
+                loadChicken(100, 30, 90, 90);
                 break;
         }
 
@@ -168,67 +168,72 @@
         ctx.drawImage(characterImage, character1.x, character1.y, character1.width, character1.height);
     };
 
+    const images = {
+        chicken: new Image(),
+        garden: new Image(),
+        fence: new Image(),
+        floor: new Image(),
+        table: new Image(),
+        chair1: new Image(),
+        chair2: new Image(),
+        oven: new Image(),
+        plant: new Image(),
+    };
+    
+    images.chicken.src = 'img/chicken1.png';
+    images.garden.src = 'img/garden.png';
+    images.fence.src = 'img/fence.png';
+    images.floor.src = 'img/floor.png';
+    images.table.src = 'img/table1.png';
+    images.chair1.src = 'img/chair1.png';
+    images.chair2.src = 'img/chair2.png';
+    images.oven.src = 'img/oven.png';
+    images.plant.src = 'img/plant.png';
+
     //Items voor Tuin
-    const loadCicken = function(x, y, width, height){
-        const img = new Image();
-        img.src = 'img/chicken1.png';
-        ctx.drawImage(img, x, y, width, height);
+    const loadChicken = function(x, y, width, height){
+        ctx.drawImage(images.chicken, x, y, width, height);
     };
-
+    
     const loadGarden = function(x, y, width, height){
-        const img = new Image();
-        img.src = 'img/garden.png';
-        ctx.drawImage(img, x, y, width, height);
+        ctx.drawImage(images.garden, x, y, width, height);
     };
-
-    const loadFence = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/fence.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadFence = function(x, y, width, height){
+        ctx.drawImage(images.fence, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-
+    
     // Instellen van keukenvloer
     const loadKitchen = function(x, y, width, height){
-        const img = new Image();
-        img.src = 'img/floor.png';
-        ctx.drawImage(img, x, y, width, height);
+        ctx.drawImage(images.floor, x, y, width, height);
     };
-
-    const loadTable = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/table1.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadTable = function(x, y, width, height){
+        ctx.drawImage(images.table, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-
-    const loadChair1 = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/chair1.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadChair1 = function(x, y, width, height){
+        ctx.drawImage(images.chair1, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-
-    const loadChair2 = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/chair2.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadChair2 = function(x, y, width, height){
+        ctx.drawImage(images.chair2, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-
-    const loadOven = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/oven.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadOven = function(x, y, width, height){
+        ctx.drawImage(images.oven, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-
-    const loadPlant = function(x,y, width, height){
-        const img = new Image();
-        img.src = 'img/plant.png';
-        ctx.drawImage(img, x, y, width, height);
+    
+    const loadPlant = function(x, y, width, height){
+        ctx.drawImage(images.plant, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
+    
 
     const collisionItems = []; // Array to store wall positions
     //Aanmaken van muur
