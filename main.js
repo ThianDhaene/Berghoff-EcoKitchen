@@ -2,9 +2,7 @@
 (function (){
     function updateXpBar(xp) {
         const maxXp = 1000;
-
         let progress = (xp / maxXp) * 100;
-
         document.getElementById('xp-progress').style.width = progress + '%';
     }
 
@@ -23,7 +21,8 @@
             character.y < item.y + item.height &&
             character.y + character.height > item.y
         );
-    }
+    };
+
     //Character properties
     class Character {
         constructor(x, y, width, height, speed) {
@@ -85,42 +84,77 @@
                 this.x += this.speed;
             }
         }
-        
     }
 
-    let chickens = [];
+    function update() {
+        // Clear the canvas
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-    class Chicken{
-        constructor (x, y, width, height, speed, age, pregnant){
-            this.x = x;
-            this.y = y;
-            this.width = width;
-            this.height = height;
-            this.speed = speed;
-            this.age = age;
-            this.pregnant = pregnant;
+        loadKitchen(300, 0, canvas.width, canvas.height);
+        loadGarden(0, 0, 300, canvas.height);
+        loadFence(0, 150, 300, 50);
+        createWall(300, 0, canvas.width, 10);
+        createWall(300, canvas.height-10, canvas.width, 10);
+        createWall(canvas.width-10, 0, 10, canvas.height);
+        createWall(300, 0, 10, canvas.height/2.5);
+        createWall(300, canvas.height - canvas.height/2.5, 10, canvas.height/2.5);
 
-            this.createChicken();
+        switch(Level){
+            case 1:
+                loadTable(750, 350 , 300, 150);
+                loadChair1(775, 510 , 50, 50);
+                loadChair1(875, 510 , 50, 50);
+                loadChair1(975, 510 , 50, 50);
+                loadChair2(775, 290 , 50, 50);
+                loadChair2(875, 290 , 50, 50);
+                loadChair2(975, 290 , 50, 50);
+                loadOven(500, 10, 120, 80);
+                loadCicken(170, 90, 90, 90);
+                loadPlant(1100, 10, 100, 80);
+                loadCicken(100, 30, 90, 90);
+                break;
         }
 
-        ageUp(){
-            this.age++;
-            if(this.age == 3){
-                this.height+=10;
-                this.width+=10;
+        // Draw the character
+        drawCharacter();
+
+        // Check for proximity to interactive zones
+        for (const zone of interactiveZones) {
+            if (detectProximity(character1, zone)) {
+                const messageWidth = ctx.measureText(zone.message).width + 20;
+                const messageHeight = 30;
+                const rectX = zone.x;
+                const rectY = zone.y - messageHeight - 10;
+    
+                // Set shadow properties
+                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
+                ctx.shadowBlur = 10;
+                ctx.shadowOffsetX = 3;
+                ctx.shadowOffsetY = 3;
+    
+                // Draw the rectangle with white border
+                ctx.fillStyle = 'white';
+                ctx.fillRect(rectX, rectY, messageWidth, messageHeight);
+                ctx.strokeStyle = 'black';
+                ctx.lineWidth = 2;
+                ctx.strokeRect(rectX, rectY, messageWidth, messageHeight);
+    
+                // Draw the interaction message
+                ctx.shadowColor = 'rgba(0, 0, 0, 0)'; // Disable shadow for text
+                ctx.fillStyle = 'black';
+                ctx.font = '16px Arial';
+                ctx.fillText(zone.message, rectX + 10, rectY + messageHeight / 2 + 5);
             }
         }
+    
+        // Reset shadow properties to default
+        ctx.shadowColor = 'rgba(0, 0, 0, 0)';
+        ctx.shadowBlur = 0;
+        ctx.shadowOffsetX = 0;
+        ctx.shadowOffsetY = 0;
+        
 
-        makeBaby(){
-            this.pregnant = true;
-            chickens.push(new Chicken(this.x, this.y, this.width, this.height, this.speed, 0, false));
-        }
-
-        createChicken(){
-            const chicken = new Image();
-            chicken.src = 'img/chicken1.png';
-            ctx.drawImage(chicken, this.x, this.y, this.width, this.height);
-        }
+        console.log("[" + character1.x + "," + character1.y + "]");
     }
 
     // Define the character image
@@ -132,147 +166,69 @@
     const drawCharacter = function(){
         // Draw the character image at the character's position
         ctx.drawImage(characterImage, character1.x, character1.y, character1.width, character1.height);
-    }
+    };
 
-    const loadLevel1 = function(){
-        loadStatic();
-        
-    }
-    
-    const loadStatic = function(){
-        loadKitchen(300, 0, canvas.width, canvas.height);
-        
-        //Aanmaken tuin
-        loadGarden(0, 0, 300, canvas.height);
-        loadFence(0, 150, 300, 50);
-        
-        //Aanmaken van muren
-        createWall(300, 0, canvas.width, 10);
-        createWall(300, canvas.height-10, canvas.width, 10);
-        createWall(canvas.width-10, 0, 10, canvas.height);
-        createWall(300, 0, 10, canvas.height/2.5);
-        createWall(300, canvas.height - canvas.height/2.5, 10, canvas.height/2.5);
+    //Items voor Tuin
+    const loadCicken = function(x, y, width, height){
+        const img = new Image();
+        img.src = 'img/chicken1.png';
+        ctx.drawImage(img, x, y, width, height);
+    };
 
-        //Aanmaken van tafels en stoelen
-        switch(Level){
-            case 1:
-                loadTable(750, 350 , 300, 150);
-                loadChair1(775, 510 , 50, 50);
-                loadChair1(875, 510 , 50, 50);
-                loadChair1(975, 510 , 50, 50);
-                loadChair2(775, 290 , 50, 50);
-                loadChair2(875, 290 , 50, 50);
-                loadChair2(975, 290 , 50, 50);
-                loadOven(400, 10, 100, 100);
-                break;
-        }
-    
-        loadCicken(170, 90, 90, 90);
-        loadCicken(100, 30, 90, 90);
-    }
+    const loadGarden = function(x, y, width, height){
+        const img = new Image();
+        img.src = 'img/garden.png';
+        ctx.drawImage(img, x, y, width, height);
+    };
+
+    const loadFence = function(x,y, width, height){
+        const img = new Image();
+        img.src = 'img/fence.png';
+        ctx.drawImage(img, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    };
 
     // Instellen van keukenvloer
     const loadKitchen = function(x, y, width, height){
-        const kitchenFloor = new Image();
-        kitchenFloor.src = 'img/floor.png';
-        ctx.drawImage(kitchenFloor, x, y, width, height);
-    }
-
-    const loadCicken = function(x, y, width, height){
-        const chicken = new Image();
-        chicken.src = 'img/chicken1.png';
-        ctx.drawImage(chicken, x, y, width, height);
-    }
-
-    //Instellen tuin
-    const loadGarden = function(x, y, width, height){
-        const garden = new Image();
-        garden.src = 'img/garden.png';
-        ctx.drawImage(garden, x, y, width, height);
-    }
+        const img = new Image();
+        img.src = 'img/floor.png';
+        ctx.drawImage(img, x, y, width, height);
+    };
 
     const loadTable = function(x,y, width, height){
-        const table = new Image();
-        table.src = 'img/table1.png';
-        ctx.drawImage(table, x, y, width, height);
+        const img = new Image();
+        img.src = 'img/table1.png';
+        ctx.drawImage(img, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
 
     const loadChair1 = function(x,y, width, height){
-        const chair = new Image();
-        chair.src = 'img/chair1.png';
-        ctx.drawImage(chair, x, y, width, height);
+        const img = new Image();
+        img.src = 'img/chair1.png';
+        ctx.drawImage(img, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
 
     const loadChair2 = function(x,y, width, height){
-        const chair = new Image();
-        chair.src = 'img/chair2.png';
-        ctx.drawImage(chair, x, y, width, height);
+        const img = new Image();
+        img.src = 'img/chair2.png';
+        ctx.drawImage(img, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadChair3 = function(x,y, width, height){
-        const chair = new Image();
-        chair.src = 'img/chair3.png';
-        ctx.drawImage(chair, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-
-    const loadFence = function(x,y, width, height){
-        const fence = new Image();
-        fence.src = 'img/fence.png';
-        ctx.drawImage(fence, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
 
     const loadOven = function(x,y, width, height){
-        const oven = new Image();
-        oven.src = 'img/oven.png';
-        ctx.drawImage(oven, x, y, width, height);
+        const img = new Image();
+        img.src = 'img/oven.png';
+        ctx.drawImage(img, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadOven1 = function(x,y, width, height){
-        const oven = new Image();
-        oven.src = 'img/oven1.png';
-        ctx.drawImage(oven, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadTv = function(x,y, width, height){
-        const tv = new Image();
-        tv.src = 'img/TV.png';
-        ctx.drawImage(tv, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadToilet = function(x,y, width, height){
-        const toilet = new Image();
-        toilet.src = 'img/toilet.png';
-        ctx.drawImage(toilet, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadSofa = function(x,y, width, height){
-        const sofa = new Image();
-        sofa.src = 'img/sofa.png';
-        ctx.drawImage(sofa, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadCouch = function(x,y, width, height){
-        const couch = new Image();
-        couch.src = 'img/couch.png';
-        ctx.drawImage(couch, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
+
     const loadPlant = function(x,y, width, height){
-        const plant = new Image();
-        plant.src = 'img/plant.png';
-        ctx.drawImage(plant, x, y, width, height);
+        const img = new Image();
+        img.src = 'img/plant.png';
+        ctx.drawImage(img, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
-    const loadSink = function(x,y, width, height){
-        const sink = new Image();
-        sink.src = 'img/sink.png';
-        ctx.drawImage(sink, x, y, width, height);
-        collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
 
     const collisionItems = []; // Array to store wall positions
     //Aanmaken van muur
@@ -281,31 +237,36 @@
         wallName.src = 'img/wall1.png';
         ctx.drawImage(wallName, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
-    }
+    };
 
+    const interactiveZones = [
+        { x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } },
+        // { x: 700, y: 200, width: 100, height: 100, message: 'E', action: () => { console.log('Interacted with zone 2'); } },
+    ];
     
 
-    // Function to update the game state
-    const update = function(){
-        // Leegmaken canvas
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-        switch(Level){
-            case 1:
-                loadLevel1();
-                break;
-        }
-        
-        // Draw the character
-        drawCharacter();
-
-        console.log("["+character1.x+","+character1.y+"]")
+    function detectProximity(character, zone, distance = 10) {
+        return (
+            character.x < zone.x + zone.width + distance &&
+            character.x + character.width > zone.x - distance &&
+            character.y < zone.y + zone.height + distance &&
+            character.y + character.height > zone.y - distance
+        );
     }
 
+    document.addEventListener('keydown', handleInteraction);
+
+    function handleInteraction(event) {
+        if (event.key === 'e' || event.key === 'E') {
+            for (const zone of interactiveZones) {
+                if (detectProximity(character1, zone)) {
+                    zone.action();
+                }
+            }
+        }
+    }
 
     //Input Handling
-    //Deel input handling met behulp van ChatGPT
-    //Functies voor movement zelf geschreven
     const keysPressed = {};
 
     document.addEventListener('keydown', handleKeyDown);
