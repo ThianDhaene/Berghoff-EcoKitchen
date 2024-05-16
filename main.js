@@ -126,32 +126,18 @@
                 const rectX = zone.x;
                 const rectY = zone.y - messageHeight - 10;
     
-                // Set shadow properties
-                ctx.shadowColor = 'rgba(0, 0, 0, 0.5)';
-                ctx.shadowBlur = 10;
-                ctx.shadowOffsetX = 3;
-                ctx.shadowOffsetY = 3;
-    
-                // Draw the rectangle with white border
+
                 ctx.fillStyle = 'white';
                 ctx.fillRect(rectX, rectY, messageWidth, messageHeight);
                 ctx.strokeStyle = 'black';
                 ctx.lineWidth = 2;
                 ctx.strokeRect(rectX, rectY, messageWidth, messageHeight);
     
-                // Draw the interaction message
-                ctx.shadowColor = 'rgba(0, 0, 0, 0)'; // Disable shadow for text
                 ctx.fillStyle = 'black';
                 ctx.font = '16px Arial';
                 ctx.fillText(zone.message, rectX + 10, rectY + messageHeight / 2 + 5);
             }
         }
-    
-        // Reset shadow properties to default
-        ctx.shadowColor = 'rgba(0, 0, 0, 0)';
-        ctx.shadowBlur = 0;
-        ctx.shadowOffsetX = 0;
-        ctx.shadowOffsetY = 0;
         
 
         console.log("[" + character1.x + "," + character1.y + "]");
