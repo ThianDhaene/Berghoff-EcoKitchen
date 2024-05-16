@@ -16,8 +16,6 @@
     //Instellen startlevel
     let Level = 1;
 
-    
-
     //Character class met movement functies
     class Character {
         constructor(x, y, width, height, speed) {
@@ -267,8 +265,9 @@
         );
     }
 
+    //Input Handling
+    //Functie om interactie met interactieve zones te checken
     document.addEventListener('keydown', handleInteraction);
-
     function handleInteraction(event) {
         if (event.key === 'e' || event.key === 'E') {
             for (const zone of interactiveZones) {
@@ -279,7 +278,8 @@
         }
     }
 
-    //Input Handling
+    //Movement van character
+    //Deels geschreven door ChatGPT behalve functies voor het bewegen zelf
     const keysPressed = {};
 
     document.addEventListener('keydown', handleKeyDown);
@@ -288,31 +288,18 @@
     function handleKeyDown(event) {
         keysPressed[event.key] = true;
     }
-    
     function handleKeyUp(event) {
         delete keysPressed[event.key];
     }
     
+    moveCharacter();
+
     function moveCharacter() {
-        if (keysPressed['ArrowUp']) {
-            character1.moveUp();
-        }
-        if (keysPressed['ArrowDown']) {
-            character1.moveDown();
-        }
-        if (keysPressed['ArrowLeft']) {
-            character1.moveLeft();
-        }
-        if (keysPressed['ArrowRight']) {
-            character1.moveRight();
-        }
-        // Update the game
+        if (keysPressed['ArrowUp']) {character1.moveUp();}
+        if (keysPressed['ArrowDown']) {character1.moveDown();}
+        if (keysPressed['ArrowLeft']) {character1.moveLeft();}
+        if (keysPressed['ArrowRight']) {character1.moveRight();}
         update();
-    
-        // Continue moving the character
         requestAnimationFrame(moveCharacter);
     }
-
-    moveCharacter();
-    update();
 })();
