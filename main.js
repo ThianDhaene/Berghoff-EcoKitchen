@@ -1,29 +1,24 @@
 "use strict";
 (function (){
-    function updateXpBar(xp) {
-        const maxXp = 1000;
-        let progress = (xp / maxXp) * 100;
-        document.getElementById('xp-progress').style.width = progress + '%';
-    }
+    //Work in progress
+    // function updateXpBar(xp) {
+    //     const maxXp = 1000;
+    //     let progress = (xp / maxXp) * 100;
+    //     document.getElementById('xp-progress').style.width = progress + '%';
+    // }
 
-    updateXpBar(1);
+    // updateXpBar(1);
 
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
 
+    //Instellen startlevel
     let Level = 1;
 
-    const detectCollision = function(character, item) {
-        return (
-            character.x < item.x + item.width &&
-            character.x + character.width > item.x &&
-            character.y < item.y + item.height &&
-            character.y + character.height > item.y
-        );
-    };
+    
 
-    //Character properties
+    //Character class met movement functies
     class Character {
         constructor(x, y, width, height, speed) {
             this.x = x;
@@ -85,11 +80,22 @@
             }
         }
     }
+    //Functie die door de character class gebruikt wordt om te checken of er een collision is
+    const detectCollision = function(character, item) {
+        return (
+            character.x < item.x + item.width &&
+            character.x + character.width > item.x &&
+            character.y < item.y + item.height &&
+            character.y + character.height > item.y
+        );
+    };
 
+    //Functie die de game ieder frame update
     function update() {
-        // Clear the canvas
+        //Canvas volledig leegmaken
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+        //Inladen van de verschillende objecten die standaard aanwezig zijn
         loadKitchen(300, 0, canvas.width, canvas.height);
         loadGarden(0, 0, 300, canvas.height);
         loadFence(0, 150, 300, 50);
@@ -99,6 +105,7 @@
         createWall(300, 0, 10, canvas.height/2.5);
         createWall(300, canvas.height - canvas.height/2.5, 10, canvas.height/2.5);
 
+        //Inladen van de objecten die specifiek zijn voor het level
         switch(Level){
             case 1:
                 loadTable(750, 350 , 300, 150);
@@ -115,10 +122,10 @@
                 break;
         }
 
-        // Draw the character
+        //Inladen van character op de corecte positie
         drawCharacter();
 
-        // Check for proximity to interactive zones
+        //Controleren of de character in een interactieve zone is
         for (const zone of interactiveZones) {
             if (detectProximity(character1, zone)) {
                 const messageWidth = ctx.measureText(zone.message).width + 20;
@@ -126,7 +133,6 @@
                 const rectX = zone.x;
                 const rectY = zone.y - messageHeight - 10;
     
-
                 ctx.fillStyle = 'white';
                 ctx.fillRect(rectX, rectY, messageWidth, messageHeight);
                 ctx.strokeStyle = 'black';
@@ -134,26 +140,26 @@
                 ctx.strokeRect(rectX, rectY, messageWidth, messageHeight);
     
                 ctx.fillStyle = 'black';
-                ctx.font = '16px Arial';
+                ctx.font = '20px Poetsen One';
                 ctx.fillText(zone.message, rectX + 10, rectY + messageHeight / 2 + 5);
             }
         }
-        
-
+        //X & Y positie van de character loggen voor debug doeleinden
         console.log("[" + character1.x + "," + character1.y + "]");
     }
+    
 
-    // Define the character image
+    //Afbeelding voor character instellen
     const characterImage = new Image();
-    characterImage.src = 'img/character.png'; // Replace 'character.png' with the path to your character image
+    characterImage.src = 'img/character.png'; 
     const character1 = new Character(550, 170, 70, 70, 5);
 
-    // Function to draw the character
-    const drawCharacter = function(){
-        // Draw the character image at the character's position
-        ctx.drawImage(characterImage, character1.x, character1.y, character1.width, character1.height);
-    };
+    //Array voor objecten waarbij een collision gecheckt moet worden
+    const collisionItems = []; 
+    //Array voor objecten waarbij een interactie gecheckt moet worden
+    let interactiveZones = [];
 
+    //Alle afbeeldingen aamaken voor de verschillende objecten
     const images = {
         chicken: new Image(),
         garden: new Image(),
@@ -164,8 +170,10 @@
         chair2: new Image(),
         oven: new Image(),
         plant: new Image(),
+        wall: new Image(),
     };
-    
+
+    //Afbeelding locatie toekennen voor de verschillende objecten
     images.chicken.src = 'img/chicken1.png';
     images.garden.src = 'img/garden.png';
     images.fence.src = 'img/fence.png';
@@ -175,31 +183,43 @@
     images.chair2.src = 'img/chair2.png';
     images.oven.src = 'img/oven.png';
     images.plant.src = 'img/plant.png';
+    images.wall.src = 'img/wall1.png';
 
-    //Items voor Tuin
+
+    //Functies voor het inladen van de verschillende objecten
+    //Objecten waarbij een collision gecheckt moet worden worden in een array gestopt
+    //Inladen van character
+    const drawCharacter = function(){
+        ctx.drawImage(characterImage, character1.x, character1.y, character1.width, character1.height);
+    };
+    //Inladen van kip
     const loadChicken = function(x, y, width, height){
         ctx.drawImage(images.chicken, x, y, width, height);
     };
-    
+
+    //Inladen van tuin
     const loadGarden = function(x, y, width, height){
         ctx.drawImage(images.garden, x, y, width, height);
     };
-    
+
+    //Inladen van hek
     const loadFence = function(x, y, width, height){
         ctx.drawImage(images.fence, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
     
-    // Instellen van keukenvloer
+    //Inladen van keukenvloer
     const loadKitchen = function(x, y, width, height){
         ctx.drawImage(images.floor, x, y, width, height);
     };
     
+    //Inladen van tafel
     const loadTable = function(x, y, width, height){
         ctx.drawImage(images.table, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
     
+    //Inladen van stoelen
     const loadChair1 = function(x, y, width, height){
         ctx.drawImage(images.chair1, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
@@ -210,35 +230,34 @@
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
     
+    //Inladen van oven
     const loadOven = function(x, y, width, height){
         ctx.drawImage(images.oven, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
     
+    //Inladen van plant
     const loadPlant = function(x, y, width, height){
         ctx.drawImage(images.plant, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
     
-
-    const collisionItems = []; // Array to store wall positions
     //Aanmaken van muur
     const createWall = function(x,y, width, height){
-        const wallName = new Image();
-        wallName.src = 'img/wall1.png';
-        ctx.drawImage(wallName, x, y, width, height);
+        ctx.drawImage(images.wall, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
 
-    let interactiveZones = [];
+    //Inladen van interactieve zones voor de verschillende levels
     switch(Level){
         case 1:
             interactiveZones = [
                 { x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } },
-                // { x: 700, y: 200, width: 100, height: 100, message: 'E', action: () => { console.log('Interacted with zone 2'); } },
             ];
+        case 2:
     }
 
+    //Functie om te checken of de character in de buurt van een interactieve zone is
     function detectProximity(character, zone, distance = 10) {
         return (
             character.x < zone.x + zone.width + distance &&
@@ -247,7 +266,6 @@
             character.y + character.height > zone.y - distance
         );
     }
-
 
     document.addEventListener('keydown', handleInteraction);
 
