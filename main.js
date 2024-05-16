@@ -155,7 +155,7 @@
     //Array voor objecten waarbij een collision gecheckt moet worden
     const collisionItems = []; 
     //Array voor objecten waarbij een interactie gecheckt moet worden
-    let interactiveZones = [];
+    const interactiveZones = [];
 
     //Alle afbeeldingen aamaken voor de verschillende objecten
     const images = {
@@ -249,9 +249,8 @@
     //Inladen van interactieve zones voor de verschillende levels
     switch(Level){
         case 1:
-            interactiveZones = [
-                { x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } },
-            ];
+            //Inladen van interactieve zone voor de oven
+            interactiveZones.push({ x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } });
         case 2:
     }
 
