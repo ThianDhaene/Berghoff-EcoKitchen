@@ -239,11 +239,14 @@
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
 
-    const interactiveZones = [
-        { x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } },
-        // { x: 700, y: 200, width: 100, height: 100, message: 'E', action: () => { console.log('Interacted with zone 2'); } },
-    ];
-    
+    let interactiveZones = [];
+    switch(Level){
+        case 1:
+            interactiveZones = [
+                { x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } },
+                // { x: 700, y: 200, width: 100, height: 100, message: 'E', action: () => { console.log('Interacted with zone 2'); } },
+            ];
+    }
 
     function detectProximity(character, zone, distance = 10) {
         return (
@@ -253,6 +256,7 @@
             character.y + character.height > zone.y - distance
         );
     }
+
 
     document.addEventListener('keydown', handleInteraction);
 
