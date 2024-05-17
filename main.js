@@ -23,6 +23,85 @@
     }
 
     updateXpBar(100);
+    // dropdown van de navbar
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropdowns = document.querySelectorAll('.dropdown');
+        const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
+    
+        dropdownToggles.forEach((dropdownToggle, index) => {
+            let isDropdownOpen = false;
+            const dropdown = dropdowns[index];
+    
+            const foodDataArray = [
+                {
+                    title: "Spaghetti Carbonara",
+                    description: "Spaghetti Carbonara is a classic Italian pasta dish made with eggs, cheese, pancetta, and pepper. It’s quick and easy to make, perfect for a weeknight dinner."
+                },
+                {
+                    title: "Margherita Pizza",
+                    description: "Margherita Pizza features a simple topping of tomatoes, mozzarella cheese, and fresh basil. It’s a timeless favorite that showcases the flavors of Italy."
+                },
+                {
+                    title: "Caesar Salad",
+                    description: "Caesar Salad is a green salad of romaine lettuce and croutons dressed with a lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, Dijon mustard, Parmesan cheese, and black pepper."
+                }
+            ];
+    
+            const createDropdownMenu = (foodDataArray, index) => {
+                const menu = document.createElement('div');
+                menu.className = 'dropdown-menu';
+    
+                const data = foodDataArray[index];
+                const foodItem = document.createElement('div');
+                foodItem.className = 'food-item';
+    
+                const title = document.createElement('h3');
+                title.textContent = data.title;
+    
+                const description = document.createElement('p');
+                description.textContent = data.description;
+    
+                foodItem.appendChild(title);
+                foodItem.appendChild(description);
+    
+                menu.appendChild(foodItem);
+    
+                return menu;
+            };
+    
+            const dropdownMenu = createDropdownMenu(foodDataArray, index);
+            dropdown.appendChild(dropdownMenu);
+    
+            dropdown.addEventListener('mouseenter', function() {
+                if (!isDropdownOpen) {
+                    dropdownMenu.style.display = 'block';
+                }
+            });
+    
+            dropdown.addEventListener('mouseleave', function() {
+                if (!isDropdownOpen) {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+    
+            dropdownToggle.addEventListener('click', function(event) {
+                event.preventDefault();
+                isDropdownOpen = !isDropdownOpen;
+                if (isDropdownOpen) {
+                    dropdownMenu.style.display = 'block';
+                } else {
+                    dropdownMenu.style.display = 'none';
+                }
+            });
+    
+            document.addEventListener('click', function(event) {
+                if (!dropdown.contains(event.target) && isDropdownOpen) {
+                    dropdownMenu.style.display = 'none';
+                    isDropdownOpen = false;
+                }
+            });
+        });
+    });
     //Aanmaken van canvas
     const canvas = document.getElementById('gameCanvas');
     const ctx = canvas.getContext('2d');
