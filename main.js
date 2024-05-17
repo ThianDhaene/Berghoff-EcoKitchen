@@ -326,21 +326,21 @@
     }
 
 
-    // Function to show a modal
+    //Functie om een modal te tonen
     function showModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Disable page scroll
+        document.body.style.overflow = 'hidden';
     }
 
-    // Function to hide a modal
+    //Function om een modal te verbergen
     function hideModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Enable page scroll
+        document.body.style.overflow = 'auto'; 
     }
 
-    // Event listener to close the modal when the close button is clicked
+    //Event listener om de close button van de modal te sluiten
     function addCloseButtonListener(modalId) {
         const modal = document.getElementById(modalId);
         modal.querySelector('.close').addEventListener('click', function() {
@@ -348,7 +348,7 @@
         });
     }
 
-    // Event listener to close the modal when clicking outside the modal content
+    //Event listener om de modal te sluiten wanneer er buiten de modal geklikt wordt
     function addOutsideClickListener(modalId) {
         window.addEventListener('click', function(event) {
             const modal = document.getElementById(modalId);
@@ -358,7 +358,7 @@
         });
     }
 
-    // Event listener to close the modal when pressing the Escape key
+    //Event listener om de modal te sluiten wanneer de escape toets ingedrukt wordt
     function addEscapeKeyListener(modalId) {
         window.addEventListener('keydown', function(event) {
             if (event.key === 'Escape') {
@@ -367,14 +367,14 @@
         });
     }
 
-    // Initialize modals
+    //Functie voor initialisatie van de modal
     function initializeModal(modalId) {
         addCloseButtonListener(modalId);
         addOutsideClickListener(modalId);
         addEscapeKeyListener(modalId);
     }
 
-    // Check if any modal is visible
+    //Controlefunctie om te checken of er een modal open is
     function isAnyModalVisible() {
         const modals = ['ovenModal', 'sinkModal'];
         return modals.some(modalId => {
@@ -382,7 +382,7 @@
         });
     }
 
-    // Initialize all modals
+    //Alle modals initialiseren
     initializeModal('ovenModal');
     initializeModal('sinkModal');
 
