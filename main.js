@@ -117,8 +117,9 @@
                 loadChair2(775, 290 , 50, 50);
                 loadChair2(875, 290 , 50, 50);
                 loadChair2(975, 290 , 50, 50);
-                loadOven(500, 10, 120, 80);
-                loadSink(620, 10, 120, 80);
+                loadFridge(310, 10, 120, 120);
+                loadOven(430, 10, 130, 90);
+                loadSink(560, 10, 130, 90);
                 loadPlant(1100, 10, 100, 80);
                 loadChicken(170, 90, 90, 90);
                 loadChicken(100, 30, 90, 90);
@@ -175,6 +176,7 @@
         plant: new Image(),
         wall: new Image(),
         sink: new Image(),
+        fridge: new Image(),
     };
 
     //Afbeelding locatie toekennen voor de verschillende objecten
@@ -189,6 +191,7 @@
     images.plant.src = 'img/plant.png';
     images.wall.src = 'img/wall1.png';
     images.sink.src = 'img/sink.png';
+    images.fridge.src = 'img/fridge1.png';
 
 
     //Functies voor het inladen van de verschillende objecten
@@ -252,6 +255,12 @@
         ctx.drawImage(images.sink, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
+
+    //Inladen van koelkast
+    const loadFridge = function(x, y, width, height){
+        ctx.drawImage(images.fridge, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
     
     //Aanmaken van muur
     const createWall = function(x,y, width, height){
@@ -263,8 +272,8 @@
     switch(Level){
         case 1:
             //Inladen van interactieve zone voor de oven
-            interactiveZones.push({ x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { showOvenModal() } });
-            interactiveZones.push({ x: 660, y: 100, width: 20, height: 5, message: 'E', action: () => { showSinkModal() } });
+            interactiveZones.push({ x: 480, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("ovenModal") } });
+            interactiveZones.push({ x: 610, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("sinkModal") } });
         case 2:
     }
 
@@ -317,63 +326,65 @@
     }
 
 
-    //Oven modal
-   //Functie om de oven modal te tonen
-    function showOvenModal() {
-        const ovenModal = document.getElementById('ovenModal');
-        ovenModal.style.display = 'block';
+    // Function to show a modal
+    function showModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'block';
         document.body.style.overflow = 'hidden'; // Disable page scroll
     }
 
-    //Function om oven modal te verbergen
-    function hideOvenModal() {
-        const ovenModal = document.getElementById('ovenModal');
-        ovenModal.style.display = 'none';
+    // Function to hide a modal
+    function hideModal(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.style.display = 'none';
         document.body.style.overflow = 'auto'; // Enable page scroll
     }
 
-    //Event listener om oven modal te verbergen wanneer de close button wordt geklikt
-    document.querySelector('#ovenModal .close').addEventListener('click', hideOvenModal);
-
-    //Event listener om oven modal te verbergen wanneer er buiten de modal wordt geklikt
-    window.addEventListener('click', function(event) {
-        const ovenModal = document.getElementById('ovenModal');
-        if (event.target === ovenModal) {
-            hideOvenModal();
-        }
-    });
-
-    //Sink modal
-    //Functie om sink modal te tonen
-    function showSinkModal() {
-        const sinkModal = document.getElementById('sinkModal');
-        sinkModal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; 
+    // Event listener to close the modal when the close button is clicked
+    function addCloseButtonListener(modalId) {
+        const modal = document.getElementById(modalId);
+        modal.querySelector('.close').addEventListener('click', function() {
+            hideModal(modalId);
+        });
     }
 
-    //Functie om sink modal te verbergen
-    function hideSinkModal() {
-        const sinkModal = document.getElementById('sinkModal');
-        sinkModal.style.display = 'none';
-        document.body.style.overflow = 'auto'; 
+    // Event listener to close the modal when clicking outside the modal content
+    function addOutsideClickListener(modalId) {
+        window.addEventListener('click', function(event) {
+            const modal = document.getElementById(modalId);
+            if (event.target === modal) {
+                hideModal(modalId);
+            }
+        });
     }
 
-    //Event listener om sink modal te verbergen wanneer de close button wordt geklikt
-    document.querySelector('#sinkModal .close').addEventListener('click', hideSinkModal);
+    // Event listener to close the modal when pressing the Escape key
+    function addEscapeKeyListener(modalId) {
+        window.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                hideModal(modalId);
+            }
+        });
+    }
 
-    //Event listener om sink modal te verbergen wanneer er buiten de modal wordt geklikt
-    window.addEventListener('click', function(event) {
-        const sinkModal = document.getElementById('sinkModal');
-        if (event.target === sinkModal) {
-            hideSinkModal();
-        }
-    });
+    // Initialize modals
+    function initializeModal(modalId) {
+        addCloseButtonListener(modalId);
+        addOutsideClickListener(modalId);
+        addEscapeKeyListener(modalId);
+    }
 
-    //Functie om te checken of er een modal open is
+    // Check if any modal is visible
     function isAnyModalVisible() {
-        return document.getElementById('ovenModal').style.display === 'block' ||
-               document.getElementById('sinkModal').style.display === 'block';
+        const modals = ['ovenModal', 'sinkModal'];
+        return modals.some(modalId => {
+            return document.getElementById(modalId).style.display === 'block';
+        });
     }
+
+    // Initialize all modals
+    initializeModal('ovenModal');
+    initializeModal('sinkModal');
 
     
 })();
