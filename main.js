@@ -27,6 +27,7 @@
         }
 
         moveUp(){
+            if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
                 if (detectCollision(this, item)) {
                     if (this.y + this.height > item.y + item.height) {
@@ -40,6 +41,7 @@
         }
 
         moveDown() {
+            if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
                 if (detectCollision(this, item)) { 
                     if (this.y < item.y) {
@@ -53,6 +55,7 @@
         }
 
         moveLeft() {
+            if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
                 if (detectCollision(this, item)) { 
                     if (this.x + this.width > item.x + item.width) {
@@ -66,6 +69,7 @@
         }
         
         moveRight() {
+            if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
                 if (detectCollision(this, item)) { 
                     if (this.x < item.x) {
@@ -114,8 +118,9 @@
                 loadChair2(875, 290 , 50, 50);
                 loadChair2(975, 290 , 50, 50);
                 loadOven(500, 10, 120, 80);
-                loadChicken(170, 90, 90, 90);
+                loadSink(620, 10, 120, 80);
                 loadPlant(1100, 10, 100, 80);
+                loadChicken(170, 90, 90, 90);
                 loadChicken(100, 30, 90, 90);
                 break;
         }
@@ -169,6 +174,7 @@
         oven: new Image(),
         plant: new Image(),
         wall: new Image(),
+        sink: new Image(),
     };
 
     //Afbeelding locatie toekennen voor de verschillende objecten
@@ -182,6 +188,7 @@
     images.oven.src = 'img/oven.png';
     images.plant.src = 'img/plant.png';
     images.wall.src = 'img/wall1.png';
+    images.sink.src = 'img/sink.png';
 
 
     //Functies voor het inladen van de verschillende objecten
@@ -239,6 +246,12 @@
         ctx.drawImage(images.plant, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
+
+    //Inladen van gootsteen
+    const loadSink = function(x, y, width, height){
+        ctx.drawImage(images.sink, x, y, width, height);
+        collisionItems.push({ x: x, y: y, width: width, height: height });
+    }
     
     //Aanmaken van muur
     const createWall = function(x,y, width, height){
@@ -250,7 +263,8 @@
     switch(Level){
         case 1:
             //Inladen van interactieve zone voor de oven
-            interactiveZones.push({ x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { console.log('Interacted with zone 1'); } });
+            interactiveZones.push({ x: 540, y: 100, width: 20, height: 5, message: 'E', action: () => { showOvenModal() } });
+            interactiveZones.push({ x: 660, y: 100, width: 20, height: 5, message: 'E', action: () => { showSinkModal() } });
         case 2:
     }
 
@@ -301,4 +315,65 @@
         update();
         requestAnimationFrame(moveCharacter);
     }
+
+
+    //Oven modal
+   //Functie om de oven modal te tonen
+    function showOvenModal() {
+        const ovenModal = document.getElementById('ovenModal');
+        ovenModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; // Disable page scroll
+    }
+
+    //Function om oven modal te verbergen
+    function hideOvenModal() {
+        const ovenModal = document.getElementById('ovenModal');
+        ovenModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; // Enable page scroll
+    }
+
+    //Event listener om oven modal te verbergen wanneer de close button wordt geklikt
+    document.querySelector('#ovenModal .close').addEventListener('click', hideOvenModal);
+
+    //Event listener om oven modal te verbergen wanneer er buiten de modal wordt geklikt
+    window.addEventListener('click', function(event) {
+        const ovenModal = document.getElementById('ovenModal');
+        if (event.target === ovenModal) {
+            hideOvenModal();
+        }
+    });
+
+    //Sink modal
+    //Functie om sink modal te tonen
+    function showSinkModal() {
+        const sinkModal = document.getElementById('sinkModal');
+        sinkModal.style.display = 'block';
+        document.body.style.overflow = 'hidden'; 
+    }
+
+    //Functie om sink modal te verbergen
+    function hideSinkModal() {
+        const sinkModal = document.getElementById('sinkModal');
+        sinkModal.style.display = 'none';
+        document.body.style.overflow = 'auto'; 
+    }
+
+    //Event listener om sink modal te verbergen wanneer de close button wordt geklikt
+    document.querySelector('#sinkModal .close').addEventListener('click', hideSinkModal);
+
+    //Event listener om sink modal te verbergen wanneer er buiten de modal wordt geklikt
+    window.addEventListener('click', function(event) {
+        const sinkModal = document.getElementById('sinkModal');
+        if (event.target === sinkModal) {
+            hideSinkModal();
+        }
+    });
+
+    //Functie om te checken of er een modal open is
+    function isAnyModalVisible() {
+        return document.getElementById('ovenModal').style.display === 'block' ||
+               document.getElementById('sinkModal').style.display === 'block';
+    }
+
+    
 })();
