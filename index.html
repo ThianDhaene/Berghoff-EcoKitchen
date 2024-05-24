@@ -11,19 +11,34 @@
     <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
     <script src="main.js" defer></script>
 </head>
-
 <body>
     <header>
-        <nav class="container">
-            <ul>
-                <li>bestelling 1</li>
-                <li>bestelling 2</li>
-                <li>bestelling 3</li>
-            </ul>
+      <div class="content">
+        <a href="#main" class="skip">Skip to main content</a>
+        <a href="#" class="logo">
+          <img src="./img/placeholder.jpg" alt="Logo" />
+        </a>
+        <button aria-expanded="false" class="hamburger" id="menu">
+          <span aria-hidden="true" class="icon">
+            <span></span><span></span><span></span>
+          </span>
+          <span>Menu</span>
+        </button>
+        <nav>
+          <ul>
+            <li class="nav-item dropdown">
+              <a href="#" class="dropdown-toggle">Gerecht</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">Gerecht</a>
+          </li>
             <div id="xp-bar">
-                <div id="xp-progress"></div>
-            </div>
+              <div id="xp-progress"></div>
+          </div>
+            <li><a href="#">Login</a></li>
+          </ul>
         </nav>
+      </div>
     </header>
     <main class="container">
         <article class="widgets">

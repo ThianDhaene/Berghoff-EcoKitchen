@@ -77,6 +77,24 @@ nav ul {
 main article ul {
   list-style-type: none;
 }
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    padding: 16px;
+    min-width: 300px;
+    z-index: 1;
+}
+
+.dropdown-menu h3 {
+    margin-top: 0;
+}
+
+.dropdown-menu p {
+    margin: 0;
+}
 
 .ads img {
   max-width: 10rem;
