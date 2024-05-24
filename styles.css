@@ -16,6 +16,7 @@ body{
 nav{
   display: flex;
   justify-content: space-around;
+  align-items: center;
 }
 
 canvas {
@@ -133,4 +134,6 @@ main{
   text-decoration: none;
   cursor: pointer;
 }
-
+section img{
+  max-width: 40px;
+}

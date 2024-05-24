@@ -1,13 +1,13 @@
 "use strict";
 (function (){
     //Work in progress
-    // function updateXpBar(xp) {
-    //     const maxXp = 1000;
-    //     let progress = (xp / maxXp) * 100;
-    //     document.getElementById('xp-progress').style.width = progress + '%';
-    // }
+     function updateXpBar(xp) {
+         const maxXp = 1000;
+         let progress = (xp / maxXp) * 100;
+         document.getElementById('xp-progress').style.width = progress + '%';
+     }
 
-    // updateXpBar(1);
+     updateXpBar(1);
 
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
