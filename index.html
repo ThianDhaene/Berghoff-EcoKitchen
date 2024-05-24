@@ -1,13 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Berghoff Ecokitchen</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="main.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Overcooked</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+    <script src="main.js" defer></script>
 </head>
 <body>
-    <canvas id="gameCanvas" width="1200" height="650"></canvas>
+    <header>
+      <div class="content">
+        <a href="#main" class="skip">Skip to main content</a>
+        <a href="#" class="logo">
+          <img src="./img/placeholder.jpg" alt="Logo" />
+        </a>
+        <button aria-expanded="false" class="hamburger" id="menu">
+          <span aria-hidden="true" class="icon">
+            <span></span><span></span><span></span>
+          </span>
+          <span>Menu</span>
+        </button>
+        <nav>
+          <ul>
+            <li class="nav-item dropdown">
+              <a href="#" class="dropdown-toggle">Gerecht</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">Gerecht</a>
+          </li>
+            <div id="xp-bar">
+              <div id="xp-progress"></div>
+          </div>
+            <li><a href="#">Login</a></li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+    <main class="container">
+        <article class="widgets">
+            <section class="shop"><img src="./img/icon_cart.png" alt="#"></section>
+            <section class="duurzaamheid"><img src="./img/icon_energy.png" alt="#"></section>
+            <section class="mini-games"><img src="./img/icon_game.png" alt="#"></section>
+        </article>
+        <article id="gamecanvas">
+            <canvas id="canvas" width="1200" height="600"></canvas>
+
+            <div id="ovenModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Oven</h2>
+                </div>
+            </div>
+            <div id="sinkModal" class="modal">
+                <div class="modal-content">
+                    <span class="close">&times;</span>
+                    <h2>Sink</h2>
+                </div>
+            </div>
+        </article>
+        <article class="ads">
+            <img src="img/placeholder.jpg" alt="">
+        </article>
+    </main>
 </body>
+
 </html>
