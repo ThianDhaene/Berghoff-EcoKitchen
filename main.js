@@ -1,17 +1,17 @@
 "use strict";
-(function (){
+(function(){
     //Work in progress
-     function updateXpBar(xp) {
-         const maxXp = 1000;
-         let progress = (xp / maxXp) * 100;
-         document.getElementById('xp-progress').style.width = progress + '%';
-     }
-
-     updateXpBar(1);
+    function updateXpBar(xp) {
+        const maxXp = 1000;
+        let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
+        return progress;
     }
-
-    updateXpBar(100);
+    
+    const progress1 = updateXpBar(1);
+    document.getElementById('xp-progress').style.width = progress1 + '%';
+    
+    const progress100 = updateXpBar(100);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function() {
         const dropdowns = document.querySelectorAll('.dropdown');
