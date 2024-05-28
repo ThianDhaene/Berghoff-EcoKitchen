@@ -25,8 +25,6 @@
     document.getElementById('closeOverlay').addEventListener('click', function () {
         document.getElementById('shopOverlay').style.display = 'none';
     });
-
-
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
