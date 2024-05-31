@@ -5,26 +5,13 @@
         const maxXp = 1000;
         let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
-        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
         return progress;
     }
-    const xp = 300;
-    updateXpBar(xp);
 
-    document.querySelector('.duurzaamheid').addEventListener('mouseover', function () {
-        document.getElementById('xp-tooltip').style.display = 'block';
-    });
+    const progress1 = updateXpBar(1);
+    document.getElementById('xp-progress').style.width = progress1 + '%';
 
-    document.querySelector('.duurzaamheid').addEventListener('mouseout', function () {
-        document.getElementById('xp-tooltip').style.display = 'none';
-    });
-    document.getElementById('shopButton').addEventListener('click', function () {
-        document.getElementById('shopOverlay').style.display = 'flex';
-    });
-
-    document.getElementById('closeOverlay').addEventListener('click', function () {
-        document.getElementById('shopOverlay').style.display = 'none';
-    });
+    const progress100 = updateXpBar(100);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
@@ -46,14 +33,55 @@
                 {
                     title: "Caesar Salad",
                     description: "Caesar Salad is a green salad of romaine lettuce and croutons dressed with a lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, Dijon mustard, Parmesan cheese, and black pepper."
+                },
+                {
+                    title: "Chicken Alfredo",
+                    description: "Chicken Alfredo is a creamy pasta dish made with fettuccine noodles, rich Alfredo sauce, and tender pieces of chicken. It’s a comforting meal that’s easy to prepare."
+                },
+                {
+                    title: "Beef Tacos",
+                    description: "Beef Tacos are a Mexican staple featuring seasoned ground beef, shredded lettuce, diced tomatoes, and cheddar cheese, all wrapped in a crispy taco shell. They are perfect for a quick and tasty meal."
+                },
+                {
+                    title: "Greek Salad",
+                    description: "Greek Salad is a fresh and flavorful dish made with cucumbers, tomatoes, red onions, Kalamata olives, feta cheese, and a dressing of olive oil, lemon juice, and oregano. It’s a healthy and delicious option."
+                },
+                {
+                    title: "Chicken Tikka Masala",
+                    description: "Chicken Tikka Masala is a popular Indian dish consisting of marinated chicken chunks cooked in a creamy and spiced tomato sauce. It’s often served with rice or naan bread."
+                },
+                {
+                    title: "Sushi Rolls",
+                    description: "Sushi Rolls are a Japanese delicacy made with vinegared rice, seafood, and vegetables, all rolled in seaweed. They come in various types, including California rolls and spicy tuna rolls."
+                },
+                {
+                    title: "Vegetable Stir-Fry",
+                    description: "Vegetable Stir-Fry is a quick and healthy meal made by sautéing a mix of fresh vegetables in a savory sauce. It’s often served over rice or noodles."
+                },
+                {
+                    title: "Chocolate Cake",
+                    description: "Chocolate Cake is a rich and moist dessert made with layers of chocolate sponge and creamy chocolate frosting. It’s a favorite treat for special occasions."
+                },
+                {
+                    title: "Caprese Salad",
+                    description: "Caprese Salad is a simple Italian dish made with sliced fresh mozzarella, tomatoes, and sweet basil, seasoned with salt and olive oil. It’s a refreshing appetizer or side dish."
+                },
+                {
+                    title: "BBQ Ribs",
+                    description: "BBQ Ribs are tender pork ribs slow-cooked and slathered in a smoky barbecue sauce. They are a classic dish for outdoor gatherings and barbecues."
+                },
+                {
+                    title: "French Onion Soup",
+                    description: "French Onion Soup is a hearty and comforting dish made with caramelized onions in a rich beef broth, topped with toasted bread and melted Gruyère cheese."
                 }
-            ];
 
-            const createDropdownMenu = (foodDataArray, index) => {
+            ];
+            const randomIndex = Math.floor(Math.random() * foodDataArray.length);
+            const createDropdownMenu = (foodDataArray) => {
                 const menu = document.createElement('div');
                 menu.className = 'dropdown-menu';
 
-                const data = foodDataArray[index];
+                const data = foodDataArray[randomIndex];
                 const foodItem = document.createElement('div');
                 foodItem.className = 'food-item';
 
@@ -65,8 +93,9 @@
 
                 foodItem.appendChild(title);
                 foodItem.appendChild(description);
-
                 menu.appendChild(foodItem);
+
+                dropdown.dataset.selectedFood = JSON.stringify(data);
 
                 return menu;
             };
@@ -103,6 +132,23 @@
                 }
             });
         });
+    });
+    //left widget energie level
+    const energie = document.querySelector('.duurzaamheid');
+    const percentage = 100;
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = `efficiëntie: ${percentage}%`;    
+
+    energie.appendChild(tooltip);
+
+    energie.addEventListener('mouseenter', function () {
+        tooltip.style.display = 'block';
+    });
+
+    energie.addEventListener('mouseleave', function () {
+        tooltip.style.display = 'none';
     });
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
@@ -369,7 +415,6 @@
             //Inladen van interactieve zone voor de oven
             interactiveZones.push({ x: 480, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("ovenModal") } });
             interactiveZones.push({ x: 610, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("sinkModal") } });
-            interactiveZones.push({ x: 310, y: 120, width: 80, height: 5, message: 'E', action: () => { showModal("fridgeModal") } });
         case 2:
     }
 
@@ -481,9 +526,6 @@
     // Initialize all modals
     initializeModal('ovenModal');
     initializeModal('sinkModal');
-    initializeModal('fridgeModal');
-
- 
 
 
 })();
