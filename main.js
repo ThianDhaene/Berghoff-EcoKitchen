@@ -5,13 +5,11 @@
         const maxXp = 1000;
         let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
+        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
         return progress;
     }
-
-    const progress1 = updateXpBar(1);
-    document.getElementById('xp-progress').style.width = progress1 + '%';
-
-    const progress100 = updateXpBar(100);
+    const xp = 300;
+    updateXpBar(xp);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
@@ -139,7 +137,7 @@
 
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
-    tooltip.textContent = `efficiëntie: ${percentage}%`;    
+    tooltip.textContent = `efficiëntie: ${percentage}%`;
 
     energie.appendChild(tooltip);
 
@@ -150,6 +148,14 @@
     energie.addEventListener('mouseleave', function () {
         tooltip.style.display = 'none';
     });
+    document.getElementById('shopButton').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'flex';
+    });
+
+    document.getElementById('closeOverlay').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'none';
+    });
+
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -415,6 +421,7 @@
             //Inladen van interactieve zone voor de oven
             interactiveZones.push({ x: 480, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("ovenModal") } });
             interactiveZones.push({ x: 610, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("sinkModal") } });
+            interactiveZones.push({ x: 310, y: 120, width: 80, height: 5, message: 'E', action: () => { showModal("fridgeModal") } });
         case 2:
     }
 
@@ -526,6 +533,6 @@
     // Initialize all modals
     initializeModal('ovenModal');
     initializeModal('sinkModal');
-
+    initializeModal('fridgeModal');
 
 })();
