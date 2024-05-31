@@ -1,26 +1,39 @@
 "use strict";
-(function (){
+(function () {
     //Work in progress
-     function updateXpBar(xp) {
-         const maxXp = 1000;
-         let progress = (xp / maxXp) * 100;
-         document.getElementById('xp-progress').style.width = progress + '%';
-     }
-
-     updateXpBar(1);
+    function updateXpBar(xp) {
+        const maxXp = 1000;
+        let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
+        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
+        return progress;
     }
+    const xp = 300;
+    updateXpBar(xp);
 
-    updateXpBar(100);
+    document.querySelector('.duurzaamheid').addEventListener('mouseover', function () {
+        document.getElementById('xp-tooltip').style.display = 'block';
+    });
+
+    document.querySelector('.duurzaamheid').addEventListener('mouseout', function () {
+        document.getElementById('xp-tooltip').style.display = 'none';
+    });
+    document.getElementById('shopButton').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'flex';
+    });
+
+    document.getElementById('closeOverlay').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'none';
+    });
     // dropdown van de navbar
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
-    
+
         dropdownToggles.forEach((dropdownToggle, index) => {
             let isDropdownOpen = false;
             const dropdown = dropdowns[index];
-    
+
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
@@ -35,45 +48,45 @@
                     description: "Caesar Salad is a green salad of romaine lettuce and croutons dressed with a lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, Dijon mustard, Parmesan cheese, and black pepper."
                 }
             ];
-    
+
             const createDropdownMenu = (foodDataArray, index) => {
                 const menu = document.createElement('div');
                 menu.className = 'dropdown-menu';
-    
+
                 const data = foodDataArray[index];
                 const foodItem = document.createElement('div');
                 foodItem.className = 'food-item';
-    
+
                 const title = document.createElement('h3');
                 title.textContent = data.title;
-    
+
                 const description = document.createElement('p');
                 description.textContent = data.description;
-    
+
                 foodItem.appendChild(title);
                 foodItem.appendChild(description);
-    
+
                 menu.appendChild(foodItem);
-    
+
                 return menu;
             };
-    
+
             const dropdownMenu = createDropdownMenu(foodDataArray, index);
             dropdown.appendChild(dropdownMenu);
-    
-            dropdown.addEventListener('mouseenter', function() {
+
+            dropdown.addEventListener('mouseenter', function () {
                 if (!isDropdownOpen) {
                     dropdownMenu.style.display = 'block';
                 }
             });
-    
-            dropdown.addEventListener('mouseleave', function() {
+
+            dropdown.addEventListener('mouseleave', function () {
                 if (!isDropdownOpen) {
                     dropdownMenu.style.display = 'none';
                 }
             });
-    
-            dropdownToggle.addEventListener('click', function(event) {
+
+            dropdownToggle.addEventListener('click', function (event) {
                 event.preventDefault();
                 isDropdownOpen = !isDropdownOpen;
                 if (isDropdownOpen) {
@@ -82,8 +95,8 @@
                     dropdownMenu.style.display = 'none';
                 }
             });
-    
-            document.addEventListener('click', function(event) {
+
+            document.addEventListener('click', function (event) {
                 if (!dropdown.contains(event.target) && isDropdownOpen) {
                     dropdownMenu.style.display = 'none';
                     isDropdownOpen = false;
@@ -108,7 +121,7 @@
             this.speed = speed;
         }
 
-        moveUp(){
+        moveUp() {
             if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
                 if (detectCollision(this, item)) {
@@ -117,7 +130,7 @@
                     }
                 }
             }
-            if(this.y > 0){
+            if (this.y > 0) {
                 this.y -= this.speed;
             }
         }
@@ -125,9 +138,9 @@
         moveDown() {
             if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
-                if (detectCollision(this, item)) { 
+                if (detectCollision(this, item)) {
                     if (this.y < item.y) {
-                        return; 
+                        return;
                     }
                 }
             }
@@ -139,9 +152,9 @@
         moveLeft() {
             if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
-                if (detectCollision(this, item)) { 
+                if (detectCollision(this, item)) {
                     if (this.x + this.width > item.x + item.width) {
-                        return; 
+                        return;
                     }
                 }
             }
@@ -149,11 +162,11 @@
                 this.x -= this.speed;
             }
         }
-        
+
         moveRight() {
             if (isAnyModalVisible()) return;
             for (const item of collisionItems) {
-                if (detectCollision(this, item)) { 
+                if (detectCollision(this, item)) {
                     if (this.x < item.x) {
                         return;
                     }
@@ -165,7 +178,7 @@
         }
     }
     //Functie die door de character class gebruikt wordt om te checken of er een collision is
-    const detectCollision = function(character, item) {
+    const detectCollision = function (character, item) {
         return (
             character.x < item.x + item.width &&
             character.x + character.width > item.x &&
@@ -184,21 +197,21 @@
         loadGarden(0, 0, 300, canvas.height);
         loadFence(0, 150, 300, 50);
         createWall(300, 0, canvas.width, 10);
-        createWall(300, canvas.height-10, canvas.width, 10);
-        createWall(canvas.width-10, 0, 10, canvas.height);
-        createWall(300, 0, 10, canvas.height/2.5);
-        createWall(300, canvas.height - canvas.height/2.5, 10, canvas.height/2.5);
+        createWall(300, canvas.height - 10, canvas.width, 10);
+        createWall(canvas.width - 10, 0, 10, canvas.height);
+        createWall(300, 0, 10, canvas.height / 2.5);
+        createWall(300, canvas.height - canvas.height / 2.5, 10, canvas.height / 2.5);
 
         //Inladen van de objecten die specifiek zijn voor het level
-        switch(Level){
+        switch (Level) {
             case 1:
-                loadTable(750, 350 , 300, 150);
-                loadChair1(775, 510 , 50, 50);
-                loadChair1(875, 510 , 50, 50);
-                loadChair1(975, 510 , 50, 50);
-                loadChair2(775, 290 , 50, 50);
-                loadChair2(875, 290 , 50, 50);
-                loadChair2(975, 290 , 50, 50);
+                loadTable(750, 350, 300, 150);
+                loadChair1(775, 510, 50, 50);
+                loadChair1(875, 510, 50, 50);
+                loadChair1(975, 510, 50, 50);
+                loadChair2(775, 290, 50, 50);
+                loadChair2(875, 290, 50, 50);
+                loadChair2(975, 290, 50, 50);
                 loadFridge(310, 10, 120, 120);
                 loadOven(430, 10, 130, 90);
                 loadSink(560, 10, 130, 90);
@@ -218,13 +231,13 @@
                 const messageHeight = 30;
                 const rectX = zone.x;
                 const rectY = zone.y - messageHeight - 10;
-    
+
                 ctx.fillStyle = 'white';
                 ctx.fillRect(rectX, rectY, messageWidth, messageHeight);
                 ctx.strokeStyle = 'black';
                 ctx.lineWidth = 2;
                 ctx.strokeRect(rectX, rectY, messageWidth, messageHeight);
-    
+
                 ctx.fillStyle = 'black';
                 ctx.font = '20px Poetsen One';
                 ctx.fillText(zone.message, rectX + 10, rectY + messageHeight / 2 + 5);
@@ -233,15 +246,15 @@
         //X & Y positie van de character loggen voor debug doeleinden
         console.log("[" + character1.x + "," + character1.y + "]");
     }
-    
+
 
     //Afbeelding voor character instellen
     const characterImage = new Image();
-    characterImage.src = 'img/character.png'; 
+    characterImage.src = 'img/character.png';
     const character1 = new Character(550, 170, 70, 70, 5);
 
     //Array voor objecten waarbij een collision gecheckt moet worden
-    const collisionItems = []; 
+    const collisionItems = [];
     //Array voor objecten waarbij een interactie gecheckt moet worden
     const interactiveZones = [];
 
@@ -279,83 +292,84 @@
     //Functies voor het inladen van de verschillende objecten
     //Objecten waarbij een collision gecheckt moet worden worden in een array gestopt
     //Inladen van character
-    const drawCharacter = function(){
+    const drawCharacter = function () {
         ctx.drawImage(characterImage, character1.x, character1.y, character1.width, character1.height);
     };
     //Inladen van kip
-    const loadChicken = function(x, y, width, height){
+    const loadChicken = function (x, y, width, height) {
         ctx.drawImage(images.chicken, x, y, width, height);
     };
 
     //Inladen van tuin
-    const loadGarden = function(x, y, width, height){
+    const loadGarden = function (x, y, width, height) {
         ctx.drawImage(images.garden, x, y, width, height);
     };
 
     //Inladen van hek
-    const loadFence = function(x, y, width, height){
+    const loadFence = function (x, y, width, height) {
         ctx.drawImage(images.fence, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-    
+
     //Inladen van keukenvloer
-    const loadKitchen = function(x, y, width, height){
+    const loadKitchen = function (x, y, width, height) {
         ctx.drawImage(images.floor, x, y, width, height);
     };
-    
+
     //Inladen van tafel
-    const loadTable = function(x, y, width, height){
+    const loadTable = function (x, y, width, height) {
         ctx.drawImage(images.table, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-    
+
     //Inladen van stoelen
-    const loadChair1 = function(x, y, width, height){
+    const loadChair1 = function (x, y, width, height) {
         ctx.drawImage(images.chair1, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-    
-    const loadChair2 = function(x, y, width, height){
+
+    const loadChair2 = function (x, y, width, height) {
         ctx.drawImage(images.chair2, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-    
+
     //Inladen van oven
-    const loadOven = function(x, y, width, height){
+    const loadOven = function (x, y, width, height) {
         ctx.drawImage(images.oven, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
-    
+
     //Inladen van plant
-    const loadPlant = function(x, y, width, height){
+    const loadPlant = function (x, y, width, height) {
         ctx.drawImage(images.plant, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
 
     //Inladen van gootsteen
-    const loadSink = function(x, y, width, height){
+    const loadSink = function (x, y, width, height) {
         ctx.drawImage(images.sink, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
 
     //Inladen van koelkast
-    const loadFridge = function(x, y, width, height){
+    const loadFridge = function (x, y, width, height) {
         ctx.drawImage(images.fridge, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     }
-    
+
     //Aanmaken van muur
-    const createWall = function(x,y, width, height){
+    const createWall = function (x, y, width, height) {
         ctx.drawImage(images.wall, x, y, width, height);
         collisionItems.push({ x: x, y: y, width: width, height: height });
     };
 
     //Inladen van interactieve zones voor de verschillende levels
-    switch(Level){
+    switch (Level) {
         case 1:
             //Inladen van interactieve zone voor de oven
             interactiveZones.push({ x: 480, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("ovenModal") } });
             interactiveZones.push({ x: 610, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("sinkModal") } });
+            interactiveZones.push({ x: 310, y: 120, width: 80, height: 5, message: 'E', action: () => { showModal("fridgeModal") } });
         case 2:
     }
 
@@ -388,21 +402,21 @@
 
     document.addEventListener('keydown', handleKeyDown);
     document.addEventListener('keyup', handleKeyUp);
-    
+
     function handleKeyDown(event) {
         keysPressed[event.key] = true;
     }
     function handleKeyUp(event) {
         delete keysPressed[event.key];
     }
-    
+
     moveCharacter();
 
     function moveCharacter() {
-        if (keysPressed['ArrowUp']) {character1.moveUp();}
-        if (keysPressed['ArrowDown']) {character1.moveDown();}
-        if (keysPressed['ArrowLeft']) {character1.moveLeft();}
-        if (keysPressed['ArrowRight']) {character1.moveRight();}
+        if (keysPressed['ArrowUp']) { character1.moveUp(); }
+        if (keysPressed['ArrowDown']) { character1.moveDown(); }
+        if (keysPressed['ArrowLeft']) { character1.moveLeft(); }
+        if (keysPressed['ArrowRight']) { character1.moveRight(); }
         update();
         requestAnimationFrame(moveCharacter);
     }
@@ -425,14 +439,14 @@
     // Event listener to close the modal when the close button is clicked
     function addCloseButtonListener(modalId) {
         const modal = document.getElementById(modalId);
-        modal.querySelector('.close').addEventListener('click', function() {
+        modal.querySelector('.close').addEventListener('click', function () {
             hideModal(modalId);
         });
     }
 
     // Event listener to close the modal when clicking outside the modal content
     function addOutsideClickListener(modalId) {
-        window.addEventListener('click', function(event) {
+        window.addEventListener('click', function (event) {
             const modal = document.getElementById(modalId);
             if (event.target === modal) {
                 hideModal(modalId);
@@ -442,7 +456,7 @@
 
     // Event listener to close the modal when pressing the Escape key
     function addEscapeKeyListener(modalId) {
-        window.addEventListener('keydown', function(event) {
+        window.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
                 hideModal(modalId);
             }
@@ -467,6 +481,9 @@
     // Initialize all modals
     initializeModal('ovenModal');
     initializeModal('sinkModal');
+    initializeModal('fridgeModal');
 
-    
+ 
+
+
 })();
