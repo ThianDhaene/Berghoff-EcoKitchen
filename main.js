@@ -133,6 +133,23 @@
             });
         });
     });
+    //left widget energie level
+    const energie = document.querySelector('.duurzaamheid');
+    const percentage = 100;
+
+    const tooltip = document.createElement('div');
+    tooltip.className = 'tooltip';
+    tooltip.textContent = `efficiëntie: ${percentage}%`;    
+
+    energie.appendChild(tooltip);
+
+    energie.addEventListener('mouseenter', function () {
+        tooltip.style.display = 'block';
+    });
+
+    energie.addEventListener('mouseleave', function () {
+        tooltip.style.display = 'none';
+    });
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
