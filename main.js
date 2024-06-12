@@ -1,5 +1,8 @@
 "use strict";
 (function () {
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        alert("Deze website kan niet gebruikt worden op een mobiel apparaat.");
+    }
     //Work in progress
     function updateXpBar(xp) {
         const maxXp = 1000;
