@@ -28,7 +28,7 @@
     const fridgeButtons = document.querySelectorAll('#fridge-items button');
 
     fridgeButtons.forEach(button => {
-        button.addEventListener('click', function () {
+        button.addEventListener('click', function() {
             const itemName = button.textContent;
             addOvenItem(itemName);
         });
@@ -37,11 +37,16 @@
     function addOvenItem(itemName) {
         console.log(`Item added to oven: ${itemName}`);
         alert(`Item "${itemName}" toegevoegd aan de oven!`);
-    
+
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         const newItem = document.createElement('li');
-        newItem.textContent = itemName;
-    
+        const newButton = document.createElement('button');
+        newButton.textContent = itemName;
+        newButton.addEventListener('click', function() {
+            itemsInHand.push(itemName);
+            console.log(`Item "${itemName}" added to your hand!`);
+        });
+        newItem.appendChild(newButton);
         ovenList.appendChild(newItem);
     }
     
@@ -75,19 +80,19 @@
 
     document.getElementById('buyItem1').addEventListener('click', function () {
         const itemXpCost = 10;
-        const itemName = 'Gruyère kaas'; // Naam van het gekochte item
+        const itemName = '🧀 Gruyère kaas'; // Naam van het gekochte item
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem2').addEventListener('click', function () {
         const itemXpCost = 20;
-        const itemName = 'Alfredo saus';
+        const itemName = '🍶 Alfredo saus';
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem3').addEventListener('click', function () {
         const itemXpCost = 30;
-        const itemName = 'Ansjovis';
+        const itemName = '🐟 Ansjovis';
         buyItem(itemXpCost, itemName);
     });
 
@@ -99,16 +104,6 @@
         document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' / ' + maxXp;
         return progress;
     }
-    const makeButton = document.querySelector('#ovenModal button');
-
-    makeButton.addEventListener('click', function () {
-        alert('Gerecht is klaar!');
-
-        addXP(50);
-        clearOvenItems();
-
-        createDropdownMenu()
-    });
 
     function addXP(amount) {
         currentXp += amount;
@@ -118,6 +113,52 @@
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         ovenList.innerHTML = '';
     }
+
+    const makeButton = document.querySelector('#ovenModal button');
+    makeButton.addEventListener('click', function () {
+        const selectedFood1 = JSON.parse(document.querySelectorAll('.dropdown')[0].dataset.selectedFood);
+        const selectedFood2 = JSON.parse(document.querySelectorAll('.dropdown')[1].dataset.selectedFood);
+        if (selectedFood1 && selectedFood2) {
+            const selectedFoodIngredients1 = selectedFood1.ingredients;
+            const selectedFoodIngredients2 = selectedFood2.ingredients;
+    
+            const ingredientsMatch1 = selectedFoodIngredients1.every(ingredient => itemsInHand.includes(ingredient));
+            const ingredientsMatch2 = selectedFoodIngredients2.every(ingredient => itemsInHand.includes(ingredient));
+    
+            if (ingredientsMatch1 || ingredientsMatch2) {
+                alert('Gerechten zijn klaar!');
+                addXP(50);
+                clearOvenItems();
+                createDropdownMenu();
+            } else {
+                alert('De ingrediënten komen niet overeen. Je kunt de gerechten niet maken.');
+
+            }
+            console.log(selectedFoodIngredients1);
+            console.log(selectedFoodIngredients2);
+            console.log(itemsInHand);
+        } else {
+            alert('Er is geen gerecht geselecteerd.');
+        }
+
+    });
+
+    function addXP(amount) {
+        currentXp += amount;
+        updateXpBar(currentXp);
+    }
+    function clearOvenItems() {
+        const ovenList = document.getElementById('ovenModal').querySelector('.oven');
+        const ovenItems = ovenList.querySelectorAll('li');
+    
+        ovenItems.forEach(item => {
+            const itemName = item.querySelector('button').textContent;
+            if (itemsInHand.includes(itemName)) {
+                ovenList.removeChild(item);
+            }
+        });
+    }
+
 
     const xp = 300;
     updateXpBar(xp);
@@ -134,57 +175,57 @@
                 {
                     title: "Spaghetti Carbonara",
                     description: "Spaghetti Carbonara wordt gemaakt met spaghetti, eieren, kaas en pancetta.",
-                    ingredients: ["spaghetti", "eieren", "kaas", "pancetta"]
+                    ingredients: ["🍝 Spaghetti", "🥚 Eieren", "🧀 Kaas", "🥓 Pancetta"]
                 },
                 {
                     title: "Margherita Pizza",
                     description: "Margherita Pizza bevat tomaten, mozzarella kaas en verse basilicum.",
-                    ingredients: ["tomaat", "mozzarella", "basilicum"]
+                    ingredients: ["🍅 Tomaat", "🧀 Mozzarella", "🌿 Basilicum"]
                 },
                 {
                     title: "Caesar Salad",
                     description: "Caesar Salad wordt gemaakt met romaine sla, croutons, citroensap, olijfolie, ei, ansjovis, knoflook, Dijon mosterd en Parmezaanse kaas.",
-                    ingredients: ["sla", "croutons", "citroensap", "olijfolie", "eieren", "ansjovis", "knoflook", "mosterd", "parmezaanse_kaas"]
+                    ingredients: ["🥬 Sla", "🍞 Croutons", "🍋 Citroensap", "🫒 Olijfolie", "🥚 Eieren", "🐟 Ansjovis", "🧄 Knoflook", "🍯Mosterd", "🧀 Parmezaanse kaas"]
                 },
                 {
                     title: "Chicken Alfredo",
                     description: "Chicken Alfredo wordt gemaakt met fettuccine noedels, Alfredo saus en kip.",
-                    ingredients: ["noedels", "alfredo_saus", "kip"]
+                    ingredients: ["🍜 Noedels", "🍶 Alfredo saus", "🍗 Kip"]
                 },
                 {
                     title: "Beef Tacos",
                     description: "Beef Tacos bevatten gekruid rundergehakt, geraspte sla, gesneden tomaten en cheddar kaas, in een taco-schelp.",
-                    ingredients: ["rundergehakt", "sla", "tomaat", "cheddar_kaas", "taco"]
+                    ingredients: ["🥩 Rundergehakt", "🥬 Sla", "🍅 Tomaat", "🧀 Cheddar kaas", "🌮 Taco"]
                 },
                 {
                     title: "Griekse Salade",
                     description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano.",
-                    ingredients: ["koùplùùer", "tomaat", "rode_ui", "olijven", "feta_kaas", "olijfolie", "citroensap", "oregano"]
+                    ingredients: ["🥒 Komkommers", "🍅 Tomaat", "🧅 Rode_ui", "🫒 Olijven", "🧀 Feta kaas", "🫒 Olijfolie", "Citroensap", "🌿 Oregano"]
                 },
                 {
                     title: "Chicken Tikka Masala",
                     description: "Chicken Tikka Masala bestaat uit gemarineerde kipstukken gekookt in een romige en gekruide tomatensaus.",
-                    ingredients: ["kip", "room", "tomatensaus"]
+                    ingredients: ["🍗 Kip", "🥛 Room", "🍅 Tomatensaus"]
                 },
                 {
                     title: "Sushi Rolls",
                     description: "Sushi Rolls worden gemaakt met azijnrijst, zeevruchten en groenten, gerold in zeewier.",
-                    ingredients: ["rijst", "zeevruchten", "zeewier"]
+                    ingredients: ["🍚 Rijst", "🦐 Zeevruchten", "🌿 Zeewier"]
                 },
                 {
                     title: "Caprese Salade",
                     description: "Caprese Salade wordt gemaakt met plakjes verse mozzarella, tomaten en zoete basilicum, gekruid met olijfolie.",
-                    ingredients: ["sla", "mozzarella", "tomaat", "basilicum", "olijfolie"]
+                    ingredients: ["🥬 Sla", "🧀 Mozzarella", "🍅 Tomaat", "🌿 Basilicum", "🫒 Olijfolie"]
                 },
                 {
                     title: "BBQ Ribs",
                     description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus.",
-                    ingredients: ["varkensribben", "barbecuesaus"]
+                    ingredients: ["🍖 Varkensribben", "Barbecuesaus"]
                 },
                 {
                     title: "Franse Uiensoep",
                     description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas.",
-                    ingredients: ["ui", "runderbouillon", "gruyère_kaas"]
+                    ingredients: ["🧅 Ui", "🍲 Runderbouillon", "🧀 Gruyère kaas"]
                 }
             ];
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
