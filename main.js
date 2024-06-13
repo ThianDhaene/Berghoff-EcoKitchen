@@ -53,15 +53,15 @@
     
 
     const maxItems = {
-        'Gruyère kaas': 3, 
-        'Alfredo saus': 2,
-        'Ansjovis': 1
+        '🧀 Gruyère kaas': 3, 
+        '🍶 Alfredo saus': 2,
+        '🐟 Ansjovis': 1
     };
     
     const purchasedItems = {
-        'Gruyère kaas': 0,
-        'Alfredo saus': 0,
-        'Ansjovis': 0
+        '🧀 Gruyère kaas': 0,
+        '🍶 Alfredo saus': 0,
+        '🐟 Ansjovis': 0
     };
     
     const buyItem = function (xpCost, itemName) {
