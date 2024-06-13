@@ -50,32 +50,48 @@
         ovenList.appendChild(newItem);
     }
 
+    const maxItems = {
+        'Gruyère kaas': 3, 
+        'Alfredo saus': 2,
+        'Ansjovis': 1
+    };
+    
+    const purchasedItems = {
+        'Gruyère kaas': 0,
+        'Alfredo saus': 0,
+        'Ansjovis': 0
+    };
+    
     const buyItem = function (xpCost, itemName) {
         if (currentXp >= xpCost) {
-            deductXp(xpCost);
-            addItemToFridge(itemName); // Voeg item toe aan koelkast
-            alert("Item gekocht! XP is nu: " + currentXp);
+            if (purchasedItems[itemName] < maxItems[itemName]) {
+                deductXp(xpCost);
+                addItemToFridge(itemName); // Add item to fridge
+                purchasedItems[itemName]++; // Increment purchased count
+                alert(`Item "${itemName}" gekocht! XP is nu: ${currentXp}`);
+            } else {
+                alert(`Je kunt niet meer van "${itemName}" kopen.`);
+            }
         } else {
             alert("Je hebt niet genoeg XP om dit item te kopen!");
         }
     };
 
-
     document.getElementById('buyItem1').addEventListener('click', function () {
         const itemXpCost = 10;
-        const itemName = 'Item 1'; // Naam van het gekochte item
+        const itemName = 'Gruyère kaas'; // Naam van het gekochte item
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem2').addEventListener('click', function () {
         const itemXpCost = 20;
-        const itemName = 'Item 2';
+        const itemName = 'Alfredo saus';
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem3').addEventListener('click', function () {
         const itemXpCost = 30;
-        const itemName = 'Item 3';
+        const itemName = 'Ansjovis';
         buyItem(itemXpCost, itemName);
     });
 
@@ -106,7 +122,6 @@
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         ovenList.innerHTML = '';
     }
-
 
     const xp = 300;
     updateXpBar(xp);
