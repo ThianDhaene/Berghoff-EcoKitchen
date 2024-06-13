@@ -28,7 +28,7 @@
     const fridgeButtons = document.querySelectorAll('#fridge-items button');
 
     fridgeButtons.forEach(button => {
-        button.addEventListener('click', function() {
+        button.addEventListener('click', function () {
             const itemName = button.textContent;
             addOvenItem(itemName);
         });
@@ -37,45 +37,57 @@
     function addOvenItem(itemName) {
         console.log(`Item added to oven: ${itemName}`);
         alert(`Item "${itemName}" toegevoegd aan de oven!`);
-
+    
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         const newItem = document.createElement('li');
-        const newButton = document.createElement('button');
-        newButton.textContent = itemName;
-        newButton.addEventListener('click', function() {
-            itemsInHand.push(itemName);
-            console.log(`Item "${itemName}" added to your hand!`);
-        });
-        newItem.appendChild(newButton);
+        newItem.textContent = itemName;
+    
         ovenList.appendChild(newItem);
     }
+    
 
+    const maxItems = {
+        'Gruyère kaas': 3, 
+        'Alfredo saus': 2,
+        'Ansjovis': 1
+    };
+    
+    const purchasedItems = {
+        'Gruyère kaas': 0,
+        'Alfredo saus': 0,
+        'Ansjovis': 0
+    };
+    
     const buyItem = function (xpCost, itemName) {
         if (currentXp >= xpCost) {
-            deductXp(xpCost);
-            addItemToFridge(itemName); // Voeg item toe aan koelkast
-            alert("Item gekocht! XP is nu: " + currentXp);
+            if (purchasedItems[itemName] < maxItems[itemName]) {
+                deductXp(xpCost);
+                addItemToFridge(itemName); // Add item to fridge
+                purchasedItems[itemName]++; // Increment purchased count
+                alert(`Item "${itemName}" gekocht! XP is nu: ${currentXp}`);
+            } else {
+                alert(`Je kunt niet meer van "${itemName}" kopen.`);
+            }
         } else {
             alert("Je hebt niet genoeg XP om dit item te kopen!");
         }
     };
 
-
     document.getElementById('buyItem1').addEventListener('click', function () {
         const itemXpCost = 10;
-        const itemName = 'Item 1'; // Naam van het gekochte item
+        const itemName = 'Gruyère kaas'; // Naam van het gekochte item
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem2').addEventListener('click', function () {
         const itemXpCost = 20;
-        const itemName = 'Item 2';
+        const itemName = 'Alfredo saus';
         buyItem(itemXpCost, itemName);
     });
 
     document.getElementById('buyItem3').addEventListener('click', function () {
         const itemXpCost = 30;
-        const itemName = 'Item 3';
+        const itemName = 'Ansjovis';
         buyItem(itemXpCost, itemName);
     });
 
@@ -86,6 +98,25 @@
         document.getElementById('xp-progress').style.width = progress + '%';
         document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' / ' + maxXp;
         return progress;
+    }
+    const makeButton = document.querySelector('#ovenModal button');
+
+    makeButton.addEventListener('click', function () {
+        alert('Gerecht is klaar!');
+
+        addXP(50);
+        clearOvenItems();
+
+        createDropdownMenu()
+    });
+
+    function addXP(amount) {
+        currentXp += amount;
+        updateXpBar(currentXp);
+    }
+    function clearOvenItems() {
+        const ovenList = document.getElementById('ovenModal').querySelector('.oven');
+        ovenList.innerHTML = '';
     }
 
     const makeButton = document.querySelector('#ovenModal button');
@@ -603,21 +634,21 @@
     }
 
 
-    // Function to show a modal
+    //Functie om een modal te tonen
     function showModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.style.display = 'block';
-        document.body.style.overflow = 'hidden'; // Disable page scroll
+        document.body.style.overflow = 'hidden';
     }
 
-    // Function to hide a modal
+    //Function om een modal te verbergen
     function hideModal(modalId) {
         const modal = document.getElementById(modalId);
         modal.style.display = 'none';
-        document.body.style.overflow = 'auto'; // Enable page scroll
+        document.body.style.overflow = 'auto'; 
     }
 
-    // Event listener to close the modal when the close button is clicked
+    //Event listener om de close button van de modal te sluiten
     function addCloseButtonListener(modalId) {
         const modal = document.getElementById(modalId);
         modal.querySelector('.close').addEventListener('click', function () {
@@ -625,7 +656,7 @@
         });
     }
 
-    // Event listener to close the modal when clicking outside the modal content
+    //Event listener om de modal te sluiten wanneer er buiten de modal geklikt wordt
     function addOutsideClickListener(modalId) {
         window.addEventListener('click', function (event) {
             const modal = document.getElementById(modalId);
@@ -635,7 +666,7 @@
         });
     }
 
-    // Event listener to close the modal when pressing the Escape key
+    //Event listener om de modal te sluiten wanneer de escape toets ingedrukt wordt
     function addEscapeKeyListener(modalId) {
         window.addEventListener('keydown', function (event) {
             if (event.key === 'Escape') {
@@ -644,14 +675,14 @@
         });
     }
 
-    // Initialize modals
+    //Functie voor initialisatie van de modal
     function initializeModal(modalId) {
         addCloseButtonListener(modalId);
         addOutsideClickListener(modalId);
         addEscapeKeyListener(modalId);
     }
 
-    // Check if any modal is visible
+    //Controlefunctie om te checken of er een modal open is
     function isAnyModalVisible() {
         const modals = ['ovenModal', 'sinkModal'];
         return modals.some(modalId => {
@@ -659,7 +690,7 @@
         });
     }
 
-    // Initialize all modals
+    //Alle modals initialiseren
     initializeModal('ovenModal');
     initializeModal('sinkModal');
     initializeModal('fridgeModal');

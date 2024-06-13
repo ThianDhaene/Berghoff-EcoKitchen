@@ -237,11 +237,30 @@ section img{
   text-decoration: none;
   cursor: pointer;
 }
+
 #fridge-items {
   display: flex;
   flex-wrap: wrap;
+  list-style-type: none;
+  padding: 0;
 }
 
 #fridge-items li {
+  margin-bottom: 5px;
   margin-right: 1rem;
+}
+
+#fridge-items button {
+  font-size: 16px;
+  padding: 8px 12px;
+  border: none;
+  background-color: #f0f0f0;
+  color: #333;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+#fridge-items button:hover {
+  background-color: #e0e0e0;
 }
