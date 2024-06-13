@@ -1,17 +1,61 @@
 "use strict";
 (function () {
+    // if komt van chat gpt
     if (/Mobi|Android/i.test(navigator.userAgent)) {
         alert("Deze website kan niet gebruikt worden op een mobiel apparaat.");
     }
-    //Work in progress
+
+    let currentXp = 300;
+
+    const deductXp = function (amount) {
+        currentXp -= amount;
+        updateXpBar(currentXp); 
+    };
+    function addItemToFridge(itemName) {
+        const fridgeItemsList = document.getElementById('fridge-items');
+        const newItem = document.createElement('li');
+        newItem.textContent = itemName;
+        fridgeItemsList.appendChild(newItem);
+    }
+    
+    const buyItem = function (xpCost, itemName) {
+        if (currentXp >= xpCost) {
+            deductXp(xpCost);
+            addItemToFridge(itemName); // Voeg item toe aan koelkast
+            alert("Item gekocht! XP is nu: " + currentXp);
+        } else {
+            alert("Je hebt niet genoeg XP om dit item te kopen!");
+        }
+    };
+    
+    document.getElementById('buyItem1').addEventListener('click', function () {
+        const itemXpCost = 10;
+        const itemName = 'Item 1'; // Naam van het gekochte item
+        buyItem(itemXpCost, itemName);
+    });
+    
+    document.getElementById('buyItem2').addEventListener('click', function () {
+        const itemXpCost = 20;
+        const itemName = 'Item 2'; // Naam van het gekochte item
+        buyItem(itemXpCost, itemName);
+    });
+    
+    document.getElementById('buyItem3').addEventListener('click', function () {
+        const itemXpCost = 30;
+        const itemName = 'Item 3'; // Naam van het gekochte item
+        buyItem(itemXpCost, itemName);
+    });
+    
+
     function updateXpBar(xp) {
         const maxXp = 1000;
         let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
-        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
+        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' / ' + maxXp;
         return progress;
     }
-    let xp = 300;
+
+    const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
