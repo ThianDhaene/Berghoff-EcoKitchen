@@ -79,7 +79,9 @@
     const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
-    function test() {
+
+    function createDropdown() {
+
         const dropdowns = document.querySelectorAll('.dropdown');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
@@ -131,7 +133,7 @@
                 {
                     title: "Franse Uiensoep",
                     description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas."
-                }
+
             ];
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
             const createDropdownMenu = (foodDataArray) => {
