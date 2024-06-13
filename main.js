@@ -15,8 +15,28 @@
         const fridgeItemsList = document.getElementById('fridge-items');
         const newItem = document.createElement('li');
         newItem.textContent = itemName;
+
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add to Oven';
+        addButton.addEventListener('click', function () {
+            addOvenItem(itemName); 
+            fridgeItemsList.removeChild(newItem);
+        });
+
+        newItem.appendChild(addButton);
         fridgeItemsList.appendChild(newItem);
     }
+    function addOvenItem(itemName) {
+        console.log(`Item added to oven: ${itemName}`);
+        alert(`Item "${itemName}" toegevoegd aan de oven!`);
+    
+        const ovenList = document.getElementById('ovenModal').querySelector('.oven');
+        const newItem = document.createElement('li');
+        newItem.textContent = itemName;
+        ovenList.appendChild(newItem);
+    }
+    
+
     
     const buyItem = function (xpCost, itemName) {
         if (currentXp >= xpCost) {
@@ -28,6 +48,7 @@
         }
     };
     
+    
     document.getElementById('buyItem1').addEventListener('click', function () {
         const itemXpCost = 10;
         const itemName = 'Item 1'; // Naam van het gekochte item
@@ -36,13 +57,13 @@
     
     document.getElementById('buyItem2').addEventListener('click', function () {
         const itemXpCost = 20;
-        const itemName = 'Item 2'; // Naam van het gekochte item
+        const itemName = 'Item 2';
         buyItem(itemXpCost, itemName);
     });
     
     document.getElementById('buyItem3').addEventListener('click', function () {
         const itemXpCost = 30;
-        const itemName = 'Item 3'; // Naam van het gekochte item
+        const itemName = 'Item 3';
         buyItem(itemXpCost, itemName);
     });
     
