@@ -1,3 +1,4 @@
+
 html {
   margin: 0;
   padding: 0;
@@ -235,4 +236,12 @@ section img{
   color: #000;
   text-decoration: none;
   cursor: pointer;
+}
+#fridge-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fridge-items li {
+  margin-right: 1rem;
 }

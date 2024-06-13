@@ -79,7 +79,9 @@
     const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
-    document.addEventListener('DOMContentLoaded', function () {
+
+    function createDropdown() {
+
         const dropdowns = document.querySelectorAll('.dropdown');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
@@ -90,56 +92,47 @@
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
-                    description: "Spaghetti Carbonara is a classic Italian pasta dish made with eggs, cheese, pancetta, and pepper. It’s quick and easy to make, perfect for a weeknight dinner."
+                    description: "Spaghetti Carbonara wordt gemaakt met spaghetti, eieren, kaas en pancetta."
                 },
                 {
                     title: "Margherita Pizza",
-                    description: "Margherita Pizza features a simple topping of tomatoes, mozzarella cheese, and fresh basil. It’s a timeless favorite that showcases the flavors of Italy."
+                    description: "Margherita Pizza bevat tomaten, mozzarella kaas en verse basilicum."
                 },
                 {
                     title: "Caesar Salad",
-                    description: "Caesar Salad is a green salad of romaine lettuce and croutons dressed with a lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, Dijon mustard, Parmesan cheese, and black pepper."
+                    description: "Caesar Salad wordt gemaakt met romaine sla, croutons, citroensap, olijfolie, ei, Worcestershire saus, ansjovis, knoflook, Dijon mosterd en Parmezaanse kaas."
                 },
                 {
                     title: "Chicken Alfredo",
-                    description: "Chicken Alfredo is a creamy pasta dish made with fettuccine noodles, rich Alfredo sauce, and tender pieces of chicken. It’s a comforting meal that’s easy to prepare."
+                    description: "Chicken Alfredo wordt gemaakt met fettuccine noedels, Alfredo saus en kip."
                 },
                 {
                     title: "Beef Tacos",
-                    description: "Beef Tacos are a Mexican staple featuring seasoned ground beef, shredded lettuce, diced tomatoes, and cheddar cheese, all wrapped in a crispy taco shell. They are perfect for a quick and tasty meal."
+                    description: "Beef Tacos bevatten gekruid rundergehakt, geraspte sla, gesneden tomaten en cheddar kaas, in een taco-schelp."
                 },
                 {
-                    title: "Greek Salad",
-                    description: "Greek Salad is a fresh and flavorful dish made with cucumbers, tomatoes, red onions, Kalamata olives, feta cheese, and a dressing of olive oil, lemon juice, and oregano. It’s a healthy and delicious option."
+                    title: "Griekse Salade",
+                    description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano."
                 },
                 {
                     title: "Chicken Tikka Masala",
-                    description: "Chicken Tikka Masala is a popular Indian dish consisting of marinated chicken chunks cooked in a creamy and spiced tomato sauce. It’s often served with rice or naan bread."
+                    description: "Chicken Tikka Masala bestaat uit gemarineerde kipstukken gekookt in een romige en gekruide tomatensaus."
                 },
                 {
                     title: "Sushi Rolls",
-                    description: "Sushi Rolls are a Japanese delicacy made with vinegared rice, seafood, and vegetables, all rolled in seaweed. They come in various types, including California rolls and spicy tuna rolls."
+                    description: "Sushi Rolls worden gemaakt met azijnrijst, zeevruchten en groenten, gerold in zeewier."
                 },
                 {
-                    title: "Vegetable Stir-Fry",
-                    description: "Vegetable Stir-Fry is a quick and healthy meal made by sautéing a mix of fresh vegetables in a savory sauce. It’s often served over rice or noodles."
-                },
-                {
-                    title: "Chocolate Cake",
-                    description: "Chocolate Cake is a rich and moist dessert made with layers of chocolate sponge and creamy chocolate frosting. It’s a favorite treat for special occasions."
-                },
-                {
-                    title: "Caprese Salad",
-                    description: "Caprese Salad is a simple Italian dish made with sliced fresh mozzarella, tomatoes, and sweet basil, seasoned with salt and olive oil. It’s a refreshing appetizer or side dish."
+                    title: "Caprese Salade",
+                    description: "Caprese Salade wordt gemaakt met plakjes verse mozzarella, tomaten en zoete basilicum, gekruid met olijfolie."
                 },
                 {
                     title: "BBQ Ribs",
-                    description: "BBQ Ribs are tender pork ribs slow-cooked and slathered in a smoky barbecue sauce. They are a classic dish for outdoor gatherings and barbecues."
+                    description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus."
                 },
                 {
-                    title: "French Onion Soup",
-                    description: "French Onion Soup is a hearty and comforting dish made with caramelized onions in a rich beef broth, topped with toasted bread and melted Gruyère cheese."
-                }
+                    title: "Franse Uiensoep",
+                    description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas."
 
             ];
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
@@ -198,7 +191,8 @@
                 }
             });
         });
-    });
+    };
+    test();
     //left widget energie level
     const energie = document.querySelector('.duurzaamheid');
     const percentage = 100;
