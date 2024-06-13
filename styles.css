@@ -237,3 +237,11 @@ section img{
   text-decoration: none;
   cursor: pointer;
 }
+#fridge-items {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#fridge-items li {
+  margin-right: 1rem;
+}

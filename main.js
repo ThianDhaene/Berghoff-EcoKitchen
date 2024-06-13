@@ -1,20 +1,85 @@
 "use strict";
 (function () {
+    // if komt van chat gpt
     if (/Mobi|Android/i.test(navigator.userAgent)) {
         alert("Deze website kan niet gebruikt worden op een mobiel apparaat.");
     }
-    //Work in progress
+
+    let currentXp = 300;
+
+    const deductXp = function (amount) {
+        currentXp -= amount;
+        updateXpBar(currentXp); 
+    };
+    function addItemToFridge(itemName) {
+        const fridgeItemsList = document.getElementById('fridge-items');
+        const newItem = document.createElement('li');
+        newItem.textContent = itemName;
+
+        const addButton = document.createElement('button');
+        addButton.textContent = 'Add to Oven';
+        addButton.addEventListener('click', function () {
+            addOvenItem(itemName); 
+            fridgeItemsList.removeChild(newItem);
+        });
+
+        newItem.appendChild(addButton);
+        fridgeItemsList.appendChild(newItem);
+    }
+    function addOvenItem(itemName) {
+        console.log(`Item added to oven: ${itemName}`);
+        alert(`Item "${itemName}" toegevoegd aan de oven!`);
+    
+        const ovenList = document.getElementById('ovenModal').querySelector('.oven');
+        const newItem = document.createElement('li');
+        newItem.textContent = itemName;
+        ovenList.appendChild(newItem);
+    }
+    
+
+    
+    const buyItem = function (xpCost, itemName) {
+        if (currentXp >= xpCost) {
+            deductXp(xpCost);
+            addItemToFridge(itemName); // Voeg item toe aan koelkast
+            alert("Item gekocht! XP is nu: " + currentXp);
+        } else {
+            alert("Je hebt niet genoeg XP om dit item te kopen!");
+        }
+    };
+    
+    
+    document.getElementById('buyItem1').addEventListener('click', function () {
+        const itemXpCost = 10;
+        const itemName = 'Item 1'; // Naam van het gekochte item
+        buyItem(itemXpCost, itemName);
+    });
+    
+    document.getElementById('buyItem2').addEventListener('click', function () {
+        const itemXpCost = 20;
+        const itemName = 'Item 2';
+        buyItem(itemXpCost, itemName);
+    });
+    
+    document.getElementById('buyItem3').addEventListener('click', function () {
+        const itemXpCost = 30;
+        const itemName = 'Item 3';
+        buyItem(itemXpCost, itemName);
+    });
+    
+
     function updateXpBar(xp) {
         const maxXp = 1000;
         let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
-        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
+        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' / ' + maxXp;
         return progress;
     }
-    let xp = 300;
+
+    const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
-    document.addEventListener('DOMContentLoaded', function () {
+    function test() {
         const dropdowns = document.querySelectorAll('.dropdown');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
@@ -25,47 +90,47 @@
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
-                    description: "Ingrediënten: Spaghetti, eieren, kaas, pancetta"
+                    description: "Spaghetti Carbonara wordt gemaakt met spaghetti, eieren, kaas en pancetta."
                 },
                 {
                     title: "Margherita Pizza",
-                    description: "Ingrediënten: Tomaten, mozzarella kaas, verse basilicum"
+                    description: "Margherita Pizza bevat tomaten, mozzarella kaas en verse basilicum."
                 },
                 {
                     title: "Caesar Salad",
-                    description: "Ingrediënten: Romaine sla, croutons, citroensap, olijfolie, ei, Worcestersaus, ansjovis, knoflook, Dijon mosterd, Parmezaanse kaas"
+                    description: "Caesar Salad wordt gemaakt met romaine sla, croutons, citroensap, olijfolie, ei, Worcestershire saus, ansjovis, knoflook, Dijon mosterd en Parmezaanse kaas."
                 },
                 {
                     title: "Chicken Alfredo",
-                    description: "Ingrediënten: Fettuccine noedels, Alfredo saus, kip"
+                    description: "Chicken Alfredo wordt gemaakt met fettuccine noedels, Alfredo saus en kip."
                 },
                 {
                     title: "Beef Tacos",
-                    description: "Ingrediënten: Rundergehakt, sla, tomaten, cheddar kaas, taco schelpen"
+                    description: "Beef Tacos bevatten gekruid rundergehakt, geraspte sla, gesneden tomaten en cheddar kaas, in een taco-schelp."
                 },
                 {
                     title: "Griekse Salade",
-                    description: "Ingrediënten: Komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap, oregano"
+                    description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano."
                 },
                 {
                     title: "Chicken Tikka Masala",
-                    description: "Ingrediënten: Kip, tomatensaus, room"
+                    description: "Chicken Tikka Masala bestaat uit gemarineerde kipstukken gekookt in een romige en gekruide tomatensaus."
                 },
                 {
-                    title: "Sushi Rollen",
-                    description: "Ingrediënten: Gezuurde rijst, zeevruchten, groenten, zeewier"
+                    title: "Sushi Rolls",
+                    description: "Sushi Rolls worden gemaakt met azijnrijst, zeevruchten en groenten, gerold in zeewier."
                 },
                 {
                     title: "Caprese Salade",
-                    description: "Ingrediënten: Verse mozzarella, tomaten, basilicum, olijfolie"
+                    description: "Caprese Salade wordt gemaakt met plakjes verse mozzarella, tomaten en zoete basilicum, gekruid met olijfolie."
                 },
                 {
                     title: "BBQ Ribs",
-                    description: "Ingrediënten: Varkensribbetjes, barbecuesaus"
+                    description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus."
                 },
                 {
                     title: "Franse Uiensoep",
-                    description: "Ingrediënten: Uien, runderbouillon,Gruyère kaas"
+                    description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas."
                 }
             ];
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
@@ -124,7 +189,8 @@
                 }
             });
         });
-    });
+    };
+    test();
     //left widget energie level
     const energie = document.querySelector('.duurzaamheid');
     const percentage = 100;
@@ -528,13 +594,5 @@
     initializeModal('ovenModal');
     initializeModal('sinkModal');
     initializeModal('fridgeModal');
-    const buttons = document.querySelectorAll('button');
-
-    buttons.forEach(button => {
-        button.addEventListener('click', function () {
-            console.log(`${button.innerText} clicked!`);
-        });
-    });
-
 
 })();
