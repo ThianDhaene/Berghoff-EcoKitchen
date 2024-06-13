@@ -37,18 +37,14 @@
     function addOvenItem(itemName) {
         console.log(`Item added to oven: ${itemName}`);
         alert(`Item "${itemName}" toegevoegd aan de oven!`);
-
+    
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         const newItem = document.createElement('li');
-        const newButton = document.createElement('button');
-        newButton.textContent = itemName;
-        newButton.addEventListener('click', function () {
-            itemsInHand.push(itemName);
-            console.log(`Item "${itemName}" added to your hand!`);
-        });
-        newItem.appendChild(newButton);
+        newItem.textContent = itemName;
+    
         ovenList.appendChild(newItem);
     }
+    
 
     const maxItems = {
         'Gruyère kaas': 3, 
