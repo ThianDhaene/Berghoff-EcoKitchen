@@ -9,35 +9,47 @@
 
     const deductXp = function (amount) {
         currentXp -= amount;
-        updateXpBar(currentXp); 
+        updateXpBar(currentXp);
     };
     function addItemToFridge(itemName) {
         const fridgeItemsList = document.getElementById('fridge-items');
         const newItem = document.createElement('li');
-        newItem.textContent = itemName;
 
         const addButton = document.createElement('button');
-        addButton.textContent = 'Add to Oven';
+        addButton.textContent = `${itemName}`;
         addButton.addEventListener('click', function () {
-            addOvenItem(itemName); 
+            addOvenItem(itemName);
             fridgeItemsList.removeChild(newItem);
         });
 
         newItem.appendChild(addButton);
         fridgeItemsList.appendChild(newItem);
     }
+    const fridgeButtons = document.querySelectorAll('#fridge-items button');
+
+    fridgeButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            const itemName = button.textContent;
+            addOvenItem(itemName);
+        });
+    });
+    const itemsInHand = [];
     function addOvenItem(itemName) {
         console.log(`Item added to oven: ${itemName}`);
         alert(`Item "${itemName}" toegevoegd aan de oven!`);
-    
+
         const ovenList = document.getElementById('ovenModal').querySelector('.oven');
         const newItem = document.createElement('li');
-        newItem.textContent = itemName;
+        const newButton = document.createElement('button');
+        newButton.textContent = itemName;
+        newButton.addEventListener('click', function() {
+            itemsInHand.push(itemName);
+            console.log(`Item "${itemName}" added to your hand!`);
+        });
+        newItem.appendChild(newButton);
         ovenList.appendChild(newItem);
     }
-    
 
-    
     const buyItem = function (xpCost, itemName) {
         if (currentXp >= xpCost) {
             deductXp(xpCost);
@@ -47,26 +59,26 @@
             alert("Je hebt niet genoeg XP om dit item te kopen!");
         }
     };
-    
-    
+
+
     document.getElementById('buyItem1').addEventListener('click', function () {
         const itemXpCost = 10;
         const itemName = 'Item 1'; // Naam van het gekochte item
         buyItem(itemXpCost, itemName);
     });
-    
+
     document.getElementById('buyItem2').addEventListener('click', function () {
         const itemXpCost = 20;
         const itemName = 'Item 2';
         buyItem(itemXpCost, itemName);
     });
-    
+
     document.getElementById('buyItem3').addEventListener('click', function () {
         const itemXpCost = 30;
         const itemName = 'Item 3';
         buyItem(itemXpCost, itemName);
     });
-    
+
 
     function updateXpBar(xp) {
         const maxXp = 1000;
@@ -79,9 +91,7 @@
     const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
-
-    function createDropdown() {
-
+    function createDropdownMenu() {
         const dropdowns = document.querySelectorAll('.dropdown');
         const dropdownToggles = document.querySelectorAll('.dropdown-toggle');
 
@@ -92,48 +102,59 @@
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
-                    description: "Spaghetti Carbonara wordt gemaakt met spaghetti, eieren, kaas en pancetta."
+                    description: "Spaghetti Carbonara wordt gemaakt met spaghetti, eieren, kaas en pancetta.",
+                    ingredients: ["spaghetti", "eieren", "kaas", "pancetta"]
                 },
                 {
                     title: "Margherita Pizza",
-                    description: "Margherita Pizza bevat tomaten, mozzarella kaas en verse basilicum."
+                    description: "Margherita Pizza bevat tomaten, mozzarella kaas en verse basilicum.",
+                    ingredients: ["tomaat", "mozzarella", "basilicum"]
                 },
                 {
                     title: "Caesar Salad",
-                    description: "Caesar Salad wordt gemaakt met romaine sla, croutons, citroensap, olijfolie, ei, Worcestershire saus, ansjovis, knoflook, Dijon mosterd en Parmezaanse kaas."
+                    description: "Caesar Salad wordt gemaakt met romaine sla, croutons, citroensap, olijfolie, ei, ansjovis, knoflook, Dijon mosterd en Parmezaanse kaas.",
+                    ingredients : ["sla", "croutons", "citroensap", "olijfolie", "eieren","ansjovis","knoflook", "mosterd","parmezaanse_kaas"]
                 },
                 {
                     title: "Chicken Alfredo",
-                    description: "Chicken Alfredo wordt gemaakt met fettuccine noedels, Alfredo saus en kip."
+                    description: "Chicken Alfredo wordt gemaakt met fettuccine noedels, Alfredo saus en kip.",
+                    ingredients : ["noedels", "alfredo_saus", "kip"]
                 },
                 {
                     title: "Beef Tacos",
-                    description: "Beef Tacos bevatten gekruid rundergehakt, geraspte sla, gesneden tomaten en cheddar kaas, in een taco-schelp."
+                    description: "Beef Tacos bevatten gekruid rundergehakt, geraspte sla, gesneden tomaten en cheddar kaas, in een taco-schelp.",
+                    ingredients : ["rundergehakt", "sla", "tomaat", "cheddar_kaas", "taco"]
                 },
                 {
                     title: "Griekse Salade",
-                    description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano."
+                    description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano.",
+                    ingredients : ["koùplùùer", "tomaat", "rode_ui", "olijven", "feta_kaas","olijfolie","citroensap", "oregano"]
                 },
                 {
                     title: "Chicken Tikka Masala",
-                    description: "Chicken Tikka Masala bestaat uit gemarineerde kipstukken gekookt in een romige en gekruide tomatensaus."
+                    description: "Chicken Tikka Masala bestaat uit gemarineerde kipstukken gekookt in een romige en gekruide tomatensaus.",
+                    ingredients : ["kip", "room", "tomatensaus"]
                 },
                 {
                     title: "Sushi Rolls",
-                    description: "Sushi Rolls worden gemaakt met azijnrijst, zeevruchten en groenten, gerold in zeewier."
+                    description: "Sushi Rolls worden gemaakt met azijnrijst, zeevruchten en groenten, gerold in zeewier.",
+                    ingredients : ["rijst", "zeevruchten", "zeewier"]
                 },
                 {
                     title: "Caprese Salade",
-                    description: "Caprese Salade wordt gemaakt met plakjes verse mozzarella, tomaten en zoete basilicum, gekruid met olijfolie."
+                    description: "Caprese Salade wordt gemaakt met plakjes verse mozzarella, tomaten en zoete basilicum, gekruid met olijfolie.",
+                    ingredients : ["sla", "mozzarella", "tomaat", "basilicum", "olijfolie"]
                 },
                 {
                     title: "BBQ Ribs",
-                    description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus."
+                    description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus.",
+                    ingredients : ["varkensribben", "barbecuesaus"]
                 },
                 {
                     title: "Franse Uiensoep",
-                    description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas."
-
+                    description: "Franse Uiensoep wordt gemaakt met gekarameliseerde uien in runderbouillon, gegarneerd met geroosterd brood en gesmolten Gruyère kaas.",
+                    ingredients : ["ui", "runderbouillon", "gruyère_kaas"]
+                }
             ];
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
             const createDropdownMenu = (foodDataArray) => {
@@ -192,7 +213,7 @@
             });
         });
     };
-    test();
+    createDropdownMenu();
     //left widget energie level
     const energie = document.querySelector('.duurzaamheid');
     const percentage = 100;
