@@ -88,6 +88,32 @@
         return progress;
     }
 
+    const makeButton = document.querySelector('#ovenModal button');
+
+    makeButton.addEventListener('click', function () {
+        const dishIngredients = ['Tomaat', 'Kaas', 'Sla']; 
+        const ingredientsMatch = dishIngredients.every(ingredient => itemsInHand.includes(ingredient));
+        if (ingredientsMatch) {
+            alert('Gerecht is klaar!');
+
+            addXP(50);
+            clearOvenItems();
+        } else {
+            alert('Ingredients do not match. Cannot make the dish.');
+        }
+    
+    });
+
+    function addXP(amount) {
+        currentXp += amount;
+        updateXpBar(currentXp);
+    }
+    function clearOvenItems() {
+        const ovenList = document.getElementById('ovenModal').querySelector('.oven');
+        ovenList.innerHTML = '';
+    }
+
+
     const xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
@@ -128,7 +154,7 @@
                 {
                     title: "Griekse Salade",
                     description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano.",
-                    ingredients : ["koùplùùer", "tomaat", "rode_ui", "olijven", "feta_kaas","olijfolie","citroensap", "oregano"]
+                    ingredients: ["koùplùùer", "tomaat", "rode_ui", "olijven", "feta_kaas", "olijfolie", "citroensap", "oregano"]
                 },
                 {
                     title: "Chicken Tikka Masala",
