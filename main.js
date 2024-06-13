@@ -11,7 +11,7 @@
         document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
         return progress;
     }
-    const xp = 300;
+    let xp = 300;
     updateXpBar(xp);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
