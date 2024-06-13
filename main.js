@@ -1,3 +1,4 @@
+
 "use strict";
 (function () {
     // if komt van chat gpt
@@ -220,7 +221,7 @@
                 {
                     title: "BBQ Ribs",
                     description: "BBQ Ribs worden gemaakt met varkensribben die langzaam worden gekookt en bedekt met barbecuesaus.",
-                    ingredients: ["🍖 Varkensribben", "Barbecuesaus"]
+                    ingredients: ["🍖 Varkensribben", "🍛 Barbecuesaus"]
                 },
                 {
                     title: "Franse Uiensoep",
