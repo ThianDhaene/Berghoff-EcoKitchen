@@ -1,17 +1,18 @@
 "use strict";
 (function () {
+    if (/Mobi|Android/i.test(navigator.userAgent)) {
+        alert("Deze website kan niet gebruikt worden op een mobiel apparaat.");
+    }
     //Work in progress
     function updateXpBar(xp) {
         const maxXp = 1000;
         let progress = (xp / maxXp) * 100;
         document.getElementById('xp-progress').style.width = progress + '%';
+        document.getElementById('xp-tooltip').textContent = 'XP: ' + xp + ' /' + maxXp;
         return progress;
     }
-
-    const progress1 = updateXpBar(1);
-    document.getElementById('xp-progress').style.width = progress1 + '%';
-
-    const progress100 = updateXpBar(100);
+    let xp = 300;
+    updateXpBar(xp);
     // dropdown van de navbar
     document.addEventListener('DOMContentLoaded', function () {
         const dropdowns = document.querySelectorAll('.dropdown');
@@ -20,62 +21,53 @@
         dropdownToggles.forEach((dropdownToggle, index) => {
             let isDropdownOpen = false;
             const dropdown = dropdowns[index];
-
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
-                    description: "Spaghetti Carbonara is a classic Italian pasta dish made with eggs, cheese, pancetta, and pepper. It’s quick and easy to make, perfect for a weeknight dinner."
+                    description: "Ingrediënten: Spaghetti, eieren, kaas, pancetta"
                 },
                 {
                     title: "Margherita Pizza",
-                    description: "Margherita Pizza features a simple topping of tomatoes, mozzarella cheese, and fresh basil. It’s a timeless favorite that showcases the flavors of Italy."
+                    description: "Ingrediënten: Tomaten, mozzarella kaas, verse basilicum"
                 },
                 {
                     title: "Caesar Salad",
-                    description: "Caesar Salad is a green salad of romaine lettuce and croutons dressed with a lemon juice, olive oil, egg, Worcestershire sauce, anchovies, garlic, Dijon mustard, Parmesan cheese, and black pepper."
+                    description: "Ingrediënten: Romaine sla, croutons, citroensap, olijfolie, ei, Worcestersaus, ansjovis, knoflook, Dijon mosterd, Parmezaanse kaas"
                 },
                 {
                     title: "Chicken Alfredo",
-                    description: "Chicken Alfredo is a creamy pasta dish made with fettuccine noodles, rich Alfredo sauce, and tender pieces of chicken. It’s a comforting meal that’s easy to prepare."
+                    description: "Ingrediënten: Fettuccine noedels, Alfredo saus, kip"
                 },
                 {
                     title: "Beef Tacos",
-                    description: "Beef Tacos are a Mexican staple featuring seasoned ground beef, shredded lettuce, diced tomatoes, and cheddar cheese, all wrapped in a crispy taco shell. They are perfect for a quick and tasty meal."
+                    description: "Ingrediënten: Rundergehakt, sla, tomaten, cheddar kaas, taco schelpen"
                 },
                 {
-                    title: "Greek Salad",
-                    description: "Greek Salad is a fresh and flavorful dish made with cucumbers, tomatoes, red onions, Kalamata olives, feta cheese, and a dressing of olive oil, lemon juice, and oregano. It’s a healthy and delicious option."
+                    title: "Griekse Salade",
+                    description: "Ingrediënten: Komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap, oregano"
                 },
                 {
                     title: "Chicken Tikka Masala",
-                    description: "Chicken Tikka Masala is a popular Indian dish consisting of marinated chicken chunks cooked in a creamy and spiced tomato sauce. It’s often served with rice or naan bread."
+                    description: "Ingrediënten: Kip, tomatensaus, room"
                 },
                 {
-                    title: "Sushi Rolls",
-                    description: "Sushi Rolls are a Japanese delicacy made with vinegared rice, seafood, and vegetables, all rolled in seaweed. They come in various types, including California rolls and spicy tuna rolls."
+                    title: "Sushi Rollen",
+                    description: "Ingrediënten: Gezuurde rijst, zeevruchten, groenten, zeewier."
                 },
                 {
-                    title: "Vegetable Stir-Fry",
-                    description: "Vegetable Stir-Fry is a quick and healthy meal made by sautéing a mix of fresh vegetables in a savory sauce. It’s often served over rice or noodles."
-                },
-                {
-                    title: "Chocolate Cake",
-                    description: "Chocolate Cake is a rich and moist dessert made with layers of chocolate sponge and creamy chocolate frosting. It’s a favorite treat for special occasions."
-                },
-                {
-                    title: "Caprese Salad",
-                    description: "Caprese Salad is a simple Italian dish made with sliced fresh mozzarella, tomatoes, and sweet basil, seasoned with salt and olive oil. It’s a refreshing appetizer or side dish."
+                    title: "Caprese Salade",
+                    description: "Ingrediënten: Verse mozzarella, tomaten, basilicum, olijfolie."
                 },
                 {
                     title: "BBQ Ribs",
-                    description: "BBQ Ribs are tender pork ribs slow-cooked and slathered in a smoky barbecue sauce. They are a classic dish for outdoor gatherings and barbecues."
+                    description: "Ingrediënten: Varkensribbetjes, barbecuesaus."
                 },
                 {
-                    title: "French Onion Soup",
-                    description: "French Onion Soup is a hearty and comforting dish made with caramelized onions in a rich beef broth, topped with toasted bread and melted Gruyère cheese."
+                    title: "Franse Uiensoep",
+                    description: "Ingrediënten: Uien, runderbouillon, Gruyère kaas."
                 }
-
             ];
+            
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
             const createDropdownMenu = (foodDataArray) => {
                 const menu = document.createElement('div');
@@ -139,7 +131,7 @@
 
     const tooltip = document.createElement('div');
     tooltip.className = 'tooltip';
-    tooltip.textContent = `efficiëntie: ${percentage}%`;    
+    tooltip.textContent = `efficiëntie: ${percentage}%`;
 
     energie.appendChild(tooltip);
 
@@ -150,6 +142,14 @@
     energie.addEventListener('mouseleave', function () {
         tooltip.style.display = 'none';
     });
+    document.getElementById('shopButton').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'flex';
+    });
+
+    document.getElementById('closeOverlay').addEventListener('click', function () {
+        document.getElementById('shopOverlay').style.display = 'none';
+    });
+
     //Aanmaken van canvas
     const canvas = document.getElementById('canvas');
     const ctx = canvas.getContext('2d');
@@ -415,6 +415,7 @@
             //Inladen van interactieve zone voor de oven
             interactiveZones.push({ x: 480, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("ovenModal") } });
             interactiveZones.push({ x: 610, y: 120, width: 20, height: 5, message: 'E', action: () => { showModal("sinkModal") } });
+            interactiveZones.push({ x: 310, y: 120, width: 80, height: 5, message: 'E', action: () => { showModal("fridgeModal") } });
         case 2:
     }
 
@@ -526,6 +527,13 @@
     // Initialize all modals
     initializeModal('ovenModal');
     initializeModal('sinkModal');
+    initializeModal('fridgeModal');
+    const buttons = document.querySelectorAll('button');
 
+    buttons.forEach(button => {
+        button.addEventListener('click', function () {
+            console.log(`${button.innerText} clicked!`);
+        });
+    });
 
 })();

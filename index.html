@@ -2,60 +2,126 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Overcooked</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
-    <script src="main.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Overcooked</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poetsen+One&display=swap" rel="stylesheet">
+  <script src="main.js" defer></script>
 </head>
+
 <body>
-    <header>
-      <div class="content">
-        <nav>
-          <ul>
-            <li class="nav-item dropdown">
-              <a href="#" class="dropdown-toggle">Gerecht</a>
+  <header>
+    <div class="content">
+      <nav>
+        <ul>
+          <li class="nav-item dropdown">
+            <a href="#" class="dropdown-toggle">Gerecht</a>
           </li>
           <li class="dropdown">
             <a href="#" class="dropdown-toggle">Gerecht</a>
           </li>
-            <div id="xp-bar">
-              <div id="xp-progress"></div>
-            </div>
-            <li><a href="#">Login</a></li>
-          </ul>
-        </nav>
-      </div>
-    </header>
-    <main class="container">
-        <article class="widgets">
-            <section class="shop"><img src="./img/icon_cart.png" alt="#"></section>
-            <section class="duurzaamheid"><img src="./img/icon_energy.png" alt="#"></section>
-            <section class="mini-games"><img src="./img/icon_game.png" alt="#"></section>
-        </article>
-        <article id="gamecanvas">
-            <canvas id="canvas" width="1200" height="600"></canvas>
+          <li id="xp-bar">
+            <div id="xp-progress"></div>
+          </li>
+          <li><a href="#">Login</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <article class="widgets">
+      <section class="shop"><img src="./img/icon_cart.png" alt="#" id="shopButton"></section>
+      <section class="duurzaamheid">
+        <img src="./img/icon_energy.png" alt="#">
+        <div id="xp-tooltip" class="tooltip">XP: 0</div>
+      </section>
 
-            <div id="ovenModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Oven</h2>
-                </div>
-            </div>
-            <div id="sinkModal" class="modal">
-                <div class="modal-content">
-                    <span class="close">&times;</span>
-                    <h2>Sink</h2>
-                </div>
-            </div>
-        </article>
-        <article class="ads">
-            <img src="img/placeholder.jpg" alt="">
-        </article>
-    </main>
-</body>
+    </article>
+    <article id="gamecanvas">
+      <canvas id="canvas" width="1200" height="600"></canvas>
+
+      <div id="ovenModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Oven</h2>
+        </div>
+      </div>
+      <div id="sinkModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Sink</h2>
+        </div>
+      </div>
+      <div id="fridgeModal" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Frigo Items</h2>
+          <ul id="fridge-items">
+          </ul>
+          <button id = "spaghetti">Spaghetti</button>
+          <button id="eieren">Eieren</button>
+          <button id="kaas">Kaas</button>
+          <button id="pancetta">Pancetta</button>
+          <button id="tomaat">Tomaat</button>
+          <button id="mozzarella">Mozzarella</button>
+          <button id="basilicum">Basilicum</button>
+          <button id="sla">Sla</button>
+          <button id="croutons">Croutons</button>
+          <button id="citroensap">Citroensap</button>
+          <button id="ansjovis">Ansjovis</button>
+          <button id="knoflook">Knoflook</button>
+          <button id="mosterd">Mosterd</button>
+          <button id="parmezaanse_kaas">Parmezaanse kaas</button>
+          <button id="noedels">Noedels</button>
+          <button id="alfredo_saus">Alfredo saus</button>
+          <button id="kip">Kip</button>
+          <button id="rundgehakt">Rundgehakt</button>
+          <button id="cheddar_kaas">Cheddar kaas</button>
+          <button id="taco">Taco</button>
+          <button id="komkommer">Komkommer</button>
+          <button id="rode_ui">Rode ui</button>
+          <button id="olijven">Olijven</button>
+          <button id="feta_kaas">Feta kaas</button>
+          <button id="oregano">Oregano</button>
+          <button id="tomatensaus">Tomatensaus</button>
+          <button id="room">Room</button>
+          <button id="rijst">Rijst</button>
+          <button id="zeevruchten">Zeevruchten</button>
+          <button id="zeewier">Zeewier</button>
+          <button id="varkensribbetjes">Varkensribbetjes</button>
+          <button id="ui">Ui</button>
+          <button id="runderbouillon">Runderbouillon</button>
+          <button id="gruyère_kaas">Gruyère kaas</button>
+        </div>
+      </div>
+    </article>
+    <article class="ads">
+      <img src="img/placeholder.jpg" alt="">
+    </article>
+  </main>
+  <div class="overlay" id="shopOverlay">
+    <div class="overlay-content">
+      <button class="close-btn" id="closeOverlay">Close</button>
+      <h2>Shop Items</h2>
+      <div class="shop-item">
+        <img src="img/item1.jpg" alt="Item 1">
+        <span>Item 1 - 10xp</span>
+        <button>buy</button>
+      </div>
+      <div class="shop-item">
+        <img src="img/item2.jpg" alt="Item 2">
+        <span>Item 2 - 20xp</span>
+        <button>buy</button>
+      </div>
+      <div class="shop-item">
+        <img src="img/item3.jpg" alt="Item 3">
+        <span>Item 3 - 30xp</span>
+        <button>buy</button>
+      </div>
+    </div>
+  </div>
 
 </html>
