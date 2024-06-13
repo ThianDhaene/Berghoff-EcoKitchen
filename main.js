@@ -21,6 +21,7 @@
         dropdownToggles.forEach((dropdownToggle, index) => {
             let isDropdownOpen = false;
             const dropdown = dropdowns[index];
+
             const foodDataArray = [
                 {
                     title: "Spaghetti Carbonara",
@@ -52,22 +53,21 @@
                 },
                 {
                     title: "Sushi Rollen",
-                    description: "Ingrediënten: Gezuurde rijst, zeevruchten, groenten, zeewier."
+                    description: "Ingrediënten: Gezuurde rijst, zeevruchten, groenten, zeewier"
                 },
                 {
                     title: "Caprese Salade",
-                    description: "Ingrediënten: Verse mozzarella, tomaten, basilicum, olijfolie."
+                    description: "Ingrediënten: Verse mozzarella, tomaten, basilicum, olijfolie"
                 },
                 {
                     title: "BBQ Ribs",
-                    description: "Ingrediënten: Varkensribbetjes, barbecuesaus."
+                    description: "Ingrediënten: Varkensribbetjes, barbecuesaus"
                 },
                 {
                     title: "Franse Uiensoep",
-                    description: "Ingrediënten: Uien, runderbouillon, Gruyère kaas."
+                    description: "Ingrediënten: Uien, runderbouillon,Gruyère kaas"
                 }
             ];
-            
             const randomIndex = Math.floor(Math.random() * foodDataArray.length);
             const createDropdownMenu = (foodDataArray) => {
                 const menu = document.createElement('div');
@@ -535,5 +535,6 @@
             console.log(`${button.innerText} clicked!`);
         });
     });
+
 
 })();
