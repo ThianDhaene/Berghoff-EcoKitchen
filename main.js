@@ -201,7 +201,7 @@
                 {
                     title: "Griekse Salade",
                     description: "Griekse Salade wordt gemaakt met komkommers, tomaten, rode uien, Kalamata olijven, feta kaas, olijfolie, citroensap en oregano.",
-                    ingredients: ["🥒 Komkommers", "🍅 Tomaat", "🧅 Rode_ui", "🫒 Olijven", "🧀 Feta kaas", "🫒 Olijfolie", "Citroensap", "🌿 Oregano"]
+                    ingredients: ["🥒 Komkommers", "🍅 Tomaat", "🧅 Rode_ui", "🫒 Olijven", "🧀 Feta kaas", "🫒 Olijfolie", "🍋 Citroensap", "🌿 Oregano"]
                 },
                 {
                     title: "Chicken Tikka Masala",
